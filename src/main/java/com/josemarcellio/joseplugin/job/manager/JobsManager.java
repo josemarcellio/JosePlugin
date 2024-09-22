@@ -130,7 +130,7 @@ public class JobsManager {
             return false;
         }
 
-        playerJobs.put(playerUUID, new PlayerJobData(plugin, job, 1, 0)); // Start at level 1, 0 EXP
+        playerJobs.put(playerUUID, new PlayerJobData(plugin, job, 1, 0));
         jobWorkerCount.put(job, jobWorkerCount.getOrDefault(job, 0) + 1);
         saveJobToDatabase(playerUUID, job, 1, 0);
         return true;
@@ -140,7 +140,7 @@ public class JobsManager {
     public boolean leaveJob(UUID playerUUID) {
         PlayerJobData data = playerJobs.get(playerUUID);
         if (data == null) {
-            return false; // Player does not have a job
+            return false;
         }
 
         String job = data.getJob();
@@ -184,7 +184,7 @@ public class JobsManager {
                 }
             }
 
-            dirtyPlayers.add(playerUUID); // Mark the player as having unsaved data
+            dirtyPlayers.add(playerUUID);
         }
     }
 

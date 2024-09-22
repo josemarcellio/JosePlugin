@@ -45,7 +45,7 @@ public class WarpListGUI {
     }
 
     public void open(Player player, int page) {
-        GUIBuilder guiBuilder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Daftar Warp").build(), 54);
+        GUIBuilder guiBuilder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Daftar Warp</aqua>").build(), 54);
 
         createWarpPane(guiBuilder, player, page);
 

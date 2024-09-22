@@ -74,7 +74,7 @@ public class FarmerListener extends BaseJobsHandler implements Listener {
             double exp = plugin.getJobProgressionData().getFarmerBlockExpMap().get(brokenBlock);
             handleSharedExp(player, exp);
 
-            Component format = componentBuilder.singleComponentBuilder("&7Level: &b" + plugin.getJobsManager().getLevel(player.getUniqueId()) + " &7(&b" + plugin.getJobsManager().getExp(player.getUniqueId()) +  "&8/&b" + (plugin.getJobsManager().getLevel(player.getUniqueId()) * 100) + "&7)" + " &7(&d" + brokenBlock + "&7)").build();
+            Component format = componentBuilder.singleComponentBuilder("<gray>Level: <aqua>" + plugin.getJobsManager().getLevel(player.getUniqueId()) + " <gray>(<aqua>" + plugin.getJobsManager().getExp(player.getUniqueId()) +  "<dark_gray>/<aqua>" + (plugin.getJobsManager().getLevel(player.getUniqueId()) * 100) + "<gray>)" + " (<light_purple>" + brokenBlock + "<gray>)").build();
             player.sendActionBar(format);
 
             handleParticleAndDrop(player, block.getLocation());

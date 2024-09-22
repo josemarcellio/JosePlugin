@@ -52,7 +52,7 @@ public class DailyRewardGUI {
     }
 
     private void openRewardGUI(Player player, String texture, String name, String lore) {
-        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder("<dark_gray>Daily Reward</dark_gray>").build(), 6 * 9);
+        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Daily Reward</aqua>").build(), 6 * 9);
 
         addDailyReward(builder, player, texture, name, lore);
         addItem(builder);

@@ -1,4 +1,59 @@
 package com.josemarcellio.joseplugin.job.category.hunter;
 
-public class HunterSkills {
+import com.josemarcellio.joseplugin.JosePlugin;
+import com.josemarcellio.joseplugin.job.category.BaseSkillsHandler;
+import org.bukkit.Material;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class HunterSkills extends BaseSkillsHandler implements Listener {
+
+    private final JosePlugin plugin;
+
+    public HunterSkills(JosePlugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    protected JosePlugin getPlugin() {
+        return plugin;
+    }
+
+    @Override
+    protected String getJobName() {
+        return "hunter";
+    }
+
+    @Override
+    protected List<Material> getValidTools() {
+        return Arrays.asList(
+                Material.WOODEN_SWORD,
+                Material.STONE_SWORD,
+                Material.IRON_SWORD,
+                Material.GOLDEN_SWORD,
+                Material.DIAMOND_SWORD,
+                Material.NETHERITE_SWORD
+        );
+    }
+
+
+    @Override
+    protected List<PotionEffect> getEffects() {
+        return Arrays.asList(
+                new PotionEffect(PotionEffectType.RESISTANCE, 30 * 20, 1),
+                new PotionEffect(PotionEffectType.STRENGTH, 30 * 20, 1)
+        );
+    }
+
+    @SuppressWarnings("unused")
+    @EventHandler
+    public void onRightClickSword(PlayerInteractEvent event) {
+        handleSkillActivation(event);
+    }
 }

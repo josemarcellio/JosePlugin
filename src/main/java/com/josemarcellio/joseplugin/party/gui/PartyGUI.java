@@ -35,7 +35,7 @@ public class PartyGUI {
     }
 
     public void open(Player player, int page) {
-        GUIBuilder guiBuilder = new GUIBuilder(componentBuilder.singleComponentBuilder("<dark_gray>Party GUI</dark_gray>").build(), 54);
+        GUIBuilder guiBuilder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Party GUI</aqua>").build(), 54);
         createPartyPane(guiBuilder, player, page);
         createNavigationPane(guiBuilder, player, page);
 
@@ -81,7 +81,7 @@ public class PartyGUI {
                 Party.PartyMode newMode = party.getMode() == Party.PartyMode.FRIENDLY ? Party.PartyMode.DUEL : Party.PartyMode.FRIENDLY;
                 party.setMode(newMode);
                 player.closeInventory();
-                open(player, page); // Refresh the GUI
+                open(player, page);
             }));
         }
     }

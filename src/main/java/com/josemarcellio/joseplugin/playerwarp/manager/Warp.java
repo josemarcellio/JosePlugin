@@ -60,8 +60,8 @@ public class Warp {
             this.pitch = location.getPitch();
         }
     }
-    public int getVisitor() { return visitor; } // Get visitor count
-    public void incrementVisitor() { this.visitor++; } // Increment visitor count
+    public int getVisitor() { return visitor; }
+    public void incrementVisitor() { this.visitor++; }
 
     public Material getMaterial() {
         return material;

@@ -29,7 +29,7 @@ public class PlayerJobData {
 
     public void addExp(double amount) {
         this.exp += amount;
-        while (this.exp >= getExpToNextLevel() && this.level < plugin.getJobsManager().getMaxLevel()) { // max level 10
+        while (this.exp >= getExpToNextLevel() && this.level < plugin.getJobsManager().getMaxLevel()) {
             this.exp -= getExpToNextLevel();
             this.level++;
         }

@@ -5,9 +5,13 @@ import com.josemarcellio.joseplugin.chat.PlayerChatListener;
 import com.josemarcellio.joseplugin.dailyreward.command.DailyRewardCommand;
 import com.josemarcellio.joseplugin.inventory.GUIManager;
 import com.josemarcellio.joseplugin.job.category.farmer.FarmerListener;
+import com.josemarcellio.joseplugin.job.category.farmer.FarmerSkills;
 import com.josemarcellio.joseplugin.job.category.hunter.HunterListener;
+import com.josemarcellio.joseplugin.job.category.hunter.HunterSkills;
 import com.josemarcellio.joseplugin.job.category.lumberjack.LumberjackListener;
+import com.josemarcellio.joseplugin.job.category.lumberjack.LumberjackSkills;
 import com.josemarcellio.joseplugin.job.category.miner.MinerListener;
+import com.josemarcellio.joseplugin.job.category.miner.MinerSkills;
 import com.josemarcellio.joseplugin.job.command.JobsCommand;
 import com.josemarcellio.joseplugin.party.PartyListener;
 import com.josemarcellio.joseplugin.party.command.PartyCommand;
@@ -37,11 +41,14 @@ public class PluginManagerRegistery implements PluginManager {
         listenerManager.registerListener(new GUIManager());
         listenerManager.registerListener(new PartyListener(partyManager));
 
-        //Jobs
         listenerManager.registerListener(new FarmerListener(plugin, partyManager));
         listenerManager.registerListener(new HunterListener(plugin, partyManager));
         listenerManager.registerListener(new MinerListener(plugin, partyManager));
         listenerManager.registerListener(new LumberjackListener(plugin, partyManager));
+        listenerManager.registerListener(new FarmerSkills(plugin));
+        listenerManager.registerListener(new HunterSkills(plugin));
+        listenerManager.registerListener(new MinerSkills(plugin));
+        listenerManager.registerListener(new LumberjackSkills(plugin));
     }
 
     @Override
