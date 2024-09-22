@@ -1,5 +1,6 @@
 package com.josemarcellio.joseplugin;
 
+import com.josemarcellio.joseplugin.bstats.Metrics;
 import com.josemarcellio.joseplugin.job.data.JobsProgressionData;
 import com.josemarcellio.joseplugin.job.manager.JobsManager;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
@@ -42,6 +43,10 @@ public class JosePlugin extends JavaPlugin {
             getLogger().info("JosePlugin requires at least version 1.21.1!");
             getServer().shutdown();
         } else {
+
+            int pluginId = 23444;
+            new Metrics(this, pluginId);
+
             dependencyManager.downloadAndLoadDependencies(this, loadedPlugins);
             getLogger().info("JosePlugin plugin enabled.");
 
