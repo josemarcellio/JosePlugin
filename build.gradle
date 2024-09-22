@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group 'com.josemarcellio.joseplugin'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+    maven { url 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT'
+    compileOnly 'me.clip:placeholderapi:2.11.6'
+    compileOnly 'net.luckperms:api:5.4'
+    compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
+    fileTree(dir: 'libs', include: '*.jar').each { file ->
+        compileOnly files(file)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+jar {
+    archiveFileName = "JosePlugin.jar"
+}

@@ -1,0 +1,17 @@
+name: JosePlugin
+main: com.josemarcellio.joseplugin.JosePlugin
+version: 1.0.0
+author: JoseMarcellio
+api-version: 1.21
+load: STARTUP
+loadbefore:
+  - Essentials
+commands:
+  dailyreward:
+    aliases: []
+  party:
+    aliases: []
+  playerwarp:
+    aliases: []
+  job:
+    aliases: []
