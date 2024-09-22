@@ -16,7 +16,7 @@ import com.josemarcellio.joseplugin.location.module.hook.RedProtectChecker;
 import com.josemarcellio.joseplugin.playerwarp.manager.Warp;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
 import com.josemarcellio.joseplugin.skull.type.SkullType;
-import com.josemarcellio.joseplugin.text.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

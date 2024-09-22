@@ -1,6 +1,6 @@
-package com.josemarcellio.joseplugin.text.component.module;
+package com.josemarcellio.joseplugin.component.module;
 
-import com.josemarcellio.joseplugin.text.component.ComponentChecker;
+import com.josemarcellio.joseplugin.component.ComponentChecker;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;

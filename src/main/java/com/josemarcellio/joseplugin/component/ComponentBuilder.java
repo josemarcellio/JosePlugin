@@ -1,6 +1,6 @@
-package com.josemarcellio.joseplugin.text.component;
+package com.josemarcellio.joseplugin.component;
 
-import com.josemarcellio.joseplugin.text.component.module.*;
+import com.josemarcellio.joseplugin.component.module.*;
 
 public class ComponentBuilder {
 

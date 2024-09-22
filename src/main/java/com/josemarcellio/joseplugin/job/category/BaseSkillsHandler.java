@@ -3,7 +3,7 @@ package com.josemarcellio.joseplugin.job.category;
 import com.josemarcellio.joseplugin.JosePlugin;
 import com.josemarcellio.joseplugin.cooldown.CooldownManager;
 import com.josemarcellio.joseplugin.cooldown.ICooldownManager;
-import com.josemarcellio.joseplugin.text.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;

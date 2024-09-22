@@ -7,7 +7,7 @@ import com.josemarcellio.joseplugin.inventory.builder.GUIBuilder;
 import com.josemarcellio.joseplugin.inventory.page.GUIPage;
 import com.josemarcellio.joseplugin.item.ItemBuilderFactory;
 import com.josemarcellio.joseplugin.skull.type.SkullType;
-import com.josemarcellio.joseplugin.text.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
 import com.josemarcellio.joseplugin.time.TimeFormatter;
 
 import net.kyori.adventure.text.Component;

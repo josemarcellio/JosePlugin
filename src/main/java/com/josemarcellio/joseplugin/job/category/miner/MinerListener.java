@@ -3,7 +3,7 @@ package com.josemarcellio.joseplugin.job.category.miner;
 import com.josemarcellio.joseplugin.JosePlugin;
 import com.josemarcellio.joseplugin.job.category.BaseJobsHandler;
 import com.josemarcellio.joseplugin.party.manager.PartyManager;
-import com.josemarcellio.joseplugin.text.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.Particle;

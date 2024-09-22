@@ -1,4 +1,4 @@
-package com.josemarcellio.joseplugin.text.component;
+package com.josemarcellio.joseplugin.component;
 
 public interface ComponentChecker<T> {
     T build();

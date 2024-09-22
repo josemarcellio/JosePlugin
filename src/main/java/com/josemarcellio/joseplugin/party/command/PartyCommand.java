@@ -2,7 +2,7 @@ package com.josemarcellio.joseplugin.party.command;
 
 import com.josemarcellio.joseplugin.party.gui.PartyGUI;
 import com.josemarcellio.joseplugin.party.manager.PartyManager;
-import com.josemarcellio.joseplugin.text.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

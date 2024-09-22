@@ -3,7 +3,7 @@ package com.josemarcellio.joseplugin.chat.manager;
 import com.josemarcellio.joseplugin.chat.render.CustomChatRenderer;
 import com.josemarcellio.joseplugin.cooldown.ICooldownManager;
 import com.josemarcellio.joseplugin.cooldown.CooldownManager;
-import com.josemarcellio.joseplugin.text.component.module.SingleComponentBuilder;
+import com.josemarcellio.joseplugin.component.module.SingleComponentBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
@@ -19,7 +19,7 @@ public class ChatManager {
     public ChatManager() {
         this.cooldownManager = new CooldownManager();
         this.chatFormat = "<hover:show_text:\"<gray>Profile:</gray> <aqua>%player_name%</aqua><newline><gray>Player UID:</gray> <aqua>%player_uuid%</aqua>\"><aqua><player></aqua> <white><message></white>";
-        this.warningMessage = "<red>Please do not spam!</red>";
+        this.warningMessage = "<red> ⚠ <color:#fae7b5>Alert <color:#c4c3d0>• <color:white>Tolong jangan spam!";
         this.cooldownTime = 3000;
     }
 

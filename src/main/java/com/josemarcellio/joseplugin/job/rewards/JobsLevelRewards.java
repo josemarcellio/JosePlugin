@@ -1,7 +1,7 @@
 package com.josemarcellio.joseplugin.job.rewards;
 
 import com.josemarcellio.joseplugin.JosePlugin;
-import com.josemarcellio.joseplugin.text.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 

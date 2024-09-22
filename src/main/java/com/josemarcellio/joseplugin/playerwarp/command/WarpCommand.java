@@ -11,7 +11,7 @@ import com.josemarcellio.joseplugin.location.module.hook.RedProtectChecker;
 import com.josemarcellio.joseplugin.playerwarp.gui.WarpListGUI;
 import com.josemarcellio.joseplugin.playerwarp.manager.Warp;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
-import com.josemarcellio.joseplugin.text.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
 
 import net.milkbowl.vault.economy.Economy;
 import org.apache.commons.lang3.StringUtils;

@@ -8,7 +8,7 @@ import com.josemarcellio.joseplugin.item.ItemBuilderFactory;
 import com.josemarcellio.joseplugin.party.manager.Party;
 import com.josemarcellio.joseplugin.party.manager.PartyManager;
 import com.josemarcellio.joseplugin.skull.type.SkullType;
-import com.josemarcellio.joseplugin.text.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
