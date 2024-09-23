@@ -2,6 +2,9 @@ package com.josemarcellio.joseplugin.plugin.manager;
 
 import com.josemarcellio.joseplugin.JosePlugin;
 import com.josemarcellio.joseplugin.chat.PlayerChatListener;
+import com.josemarcellio.joseplugin.chat.troll.TrollCommand;
+import com.josemarcellio.joseplugin.cooldown.CooldownManager;
+import com.josemarcellio.joseplugin.cooldown.ICooldownManager;
 import com.josemarcellio.joseplugin.dailyreward.command.DailyRewardCommand;
 import com.josemarcellio.joseplugin.inventory.GUIManager;
 import com.josemarcellio.joseplugin.job.category.farmer.FarmerListener;
@@ -26,6 +29,7 @@ public class PluginManagerRegistery implements PluginManager {
     private final WarpManager warpManager;
     private final PartyManager partyManager;
     private final JosePlugin plugin;
+    private final ICooldownManager cooldownManager = new CooldownManager();
 
     public PluginManagerRegistery(JosePlugin plugin) {
         this.plugin = plugin;
@@ -37,7 +41,7 @@ public class PluginManagerRegistery implements PluginManager {
 
     @Override
     public void registerListeners() {
-        listenerManager.registerListener(new PlayerChatListener());
+        listenerManager.registerListener(new PlayerChatListener(cooldownManager));
         listenerManager.registerListener(new GUIManager());
         listenerManager.registerListener(new PartyListener(partyManager));
 
@@ -57,6 +61,6 @@ public class PluginManagerRegistery implements PluginManager {
         commandManager.registerCommand("party", new PartyCommand(partyManager));
         commandManager.registerCommand("playerwarp", new WarpCommand(plugin, warpManager));
         commandManager.registerCommand("job", new JobsCommand(plugin));
-
+        commandManager.registerCommand("troll", new TrollCommand(cooldownManager));
     }
 }

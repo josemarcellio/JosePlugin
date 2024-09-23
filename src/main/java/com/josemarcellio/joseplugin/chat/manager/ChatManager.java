@@ -2,7 +2,6 @@ package com.josemarcellio.joseplugin.chat.manager;
 
 import com.josemarcellio.joseplugin.chat.render.CustomChatRenderer;
 import com.josemarcellio.joseplugin.cooldown.ICooldownManager;
-import com.josemarcellio.joseplugin.cooldown.CooldownManager;
 import com.josemarcellio.joseplugin.component.module.SingleComponentBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -16,11 +15,11 @@ public class ChatManager {
     private final String warningMessage;
     private final int cooldownTime;
 
-    public ChatManager() {
-        this.cooldownManager = new CooldownManager();
+    public ChatManager(ICooldownManager cooldownManager) {
+        this.cooldownManager = cooldownManager;
         this.chatFormat = "<hover:show_text:\"<gray>Profile:</gray> <aqua>%player_name%</aqua><newline><gray>Player UID:</gray> <aqua>%player_uuid%</aqua>\"><aqua><player></aqua> <white><message></white>";
-        this.warningMessage = "<red> ⚠ <color:#fae7b5>Alert <color:#c4c3d0>• <color:white>Tolong jangan spam!";
-        this.cooldownTime = 3000;
+        this.warningMessage = "<red> ⚠ <color:#fae7b5>Alert <color:#c4c3d0>• <white>Tolong jangan spam!";
+        this.cooldownTime = 3 * 1000;
     }
 
     public boolean handleChat(Player player) {
@@ -37,7 +36,7 @@ public class ChatManager {
     }
 
     public CustomChatRenderer getChatRenderer() {
-        return new CustomChatRenderer(chatFormat);
+        return new CustomChatRenderer(chatFormat, cooldownManager);
     }
 
     private void sendCooldownMessage(Player player) {

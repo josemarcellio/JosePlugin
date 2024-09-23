@@ -61,13 +61,13 @@ public class WarpCommand implements CommandExecutor {
     }
 
     private boolean handleHelp(CommandSender sender) {
-        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/playerwarp create <name>").build());
-        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/playerwarp location").build());
-        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/playerwarp icon <material>").build());
-        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/playerwarp visit <warp>").build());
-        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/playerwarp delete <warp>").build());
-        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/playerwarp description <warp> <description>").build());
-        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/playerwarp list").build());
+        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/playerwarp create <name>").build());
+        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/playerwarp location").build());
+        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/playerwarp icon <material>").build());
+        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/playerwarp visit <warp>").build());
+        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/playerwarp delete <warp>").build());
+        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/playerwarp description <warp> <description>").build());
+        sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/playerwarp list").build());
         return true;
     }
 
@@ -78,7 +78,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         if (args.length < 2) {
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/pwarp create <name-warp>").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/pwarp create <name-warp>").build());
             return false;
         }
 
@@ -89,12 +89,12 @@ public class WarpCommand implements CommandExecutor {
         int maxLength = 10;
 
         if (!StringUtils.isAlphanumeric(name)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Hanya huruf dan angka yang diperbolehkan!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Hanya huruf dan angka yang diperbolehkan!").build());
             return false;
         }
 
         if (name.length() < minLength || name.length() > maxLength) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Nama warp minimal <aqua>" + minLength + " <white>dan maksimal <aqua>" + maxLength + " <white>huruf!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Nama warp minimal <aqua>" + minLength + " <white>dan maksimal <aqua>" + maxLength + " <white>huruf!").build());
             return false;
         }
 
@@ -102,12 +102,12 @@ public class WarpCommand implements CommandExecutor {
         Map<String, Warp> warpMap = warpManager.getWarps();
 
         if (warpMap.containsKey(name)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Nama <aqua>" + name + " <white>sudah ada yang menggunakan!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Nama <aqua>" + name + " <white>sudah ada yang menggunakan!").build());
             return false;
         }
 
         if (blacklist.isBlacklistWorld(player)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Tidak bisa membuat warp di tempat ini, karena world <aqua>" + player.getWorld().getName() + " <white>diblacklist!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa membuat warp di tempat ini, karena world <aqua>" + player.getWorld().getName() + " <white>diblacklist!").build());
             return false;
         }
 
@@ -120,7 +120,7 @@ public class WarpCommand implements CommandExecutor {
                 .addCheck(new RedProtectChecker());
 
         if (!safeLocation.isSafeLocation(player, player.getLocation())) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Tidak bisa membuat warp di tempat ini karena tempat ini tidak aman!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa membuat warp di tempat ini karena tempat ini tidak aman!").build());
             return false;
         }
 
@@ -130,7 +130,7 @@ public class WarpCommand implements CommandExecutor {
 
         int maxWarps = 5;
         if (playerWarpCount >= maxWarps) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Kamu sudah mencapai batas maksimal pembuatan warp!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu sudah mencapai batas maksimal pembuatan warp!").build());
             return false;
         }
 
@@ -138,7 +138,7 @@ public class WarpCommand implements CommandExecutor {
         Economy econ = plugin.getEconomy();
 
         if (econ != null && !econ.has(player, price)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Kamu tidak memiliki cukup coins untuk membuat warp, biaya pembuatan: " + price + " coins!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu tidak memiliki cukup coins untuk membuat warp, biaya pembuatan: " + price + " coins!").build());
             return false;
         }
 
@@ -162,7 +162,7 @@ public class WarpCommand implements CommandExecutor {
         );
 
         warpManager.addWarp(name, warp);
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Berhasil membuat warp dengan nama <aqua>" + name).build());
+        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Berhasil membuat warp dengan nama <aqua>" + name).build());
         return true;
     }
 
@@ -173,7 +173,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         if (args.length < 3) {
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/pwarp icon <name-warp> <material>").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/pwarp icon <name-warp> <material>").build());
             return false;
         }
 
@@ -184,47 +184,47 @@ public class WarpCommand implements CommandExecutor {
         Map<String, Warp> warpMap = warpManager.getWarps();
 
         if (!warpMap.containsKey(warpName)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Warp dengan nama <aqua>" + warpName + " tidak ditemukan!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Warp dengan nama <aqua>" + warpName + " tidak ditemukan!").build());
             return false;
         }
 
         Warp warp = warpMap.get(warpName);
 
         if (!warp.getOwnerUUID().equals(player.getUniqueId().toString())) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Kamu tidak memiliki izin untuk mengubah icon warp <aqua>" + warpName).build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu tidak memiliki izin untuk mengubah icon warp <aqua>" + warpName).build());
             return false;
         }
 
         if (blacklist.isBlacklistItem(material)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Material <aqua>" + material + " tidak dapat digunakan sebagai icon!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Material <aqua>" + material + " tidak dapat digunakan sebagai icon!").build());
             return false;
         }
 
         Material materialEnum = Material.matchMaterial(material.toLowerCase());
 
         if (!canBeDisplayedInGUI(materialEnum)) {
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Material ini tidak tersedia!").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Material ini tidak tersedia!").build());
             return false;
         }
 
         if (material.equals("reset")) {
             warp.setTextures("NONE");
             warp.setMaterial("CHEST");
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Berhasil mereset icon pada warp").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Berhasil mereset icon pada warp").build());
         } else if (!material.startsWith("custom_head;")) {
             if (!warp.getTextures().equals("NONE")) {
                 warp.setTextures("NONE");
             }
 
             warp.setMaterial(material);
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Berhasil mengubah icon warp dengan <aqua>" + material).build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Berhasil mengubah icon warp dengan <aqua>" + material).build());
 
         } else {
             if (player.hasPermission("atlaspwarps.icon")) {
                 warp.setTextures(material.replace("custom_head;", ""));
-                sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Berhasil mengubah icon warp dengan <aqua>" + material).build());
+                sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Berhasil mengubah icon warp dengan <aqua>" + material).build());
             } else {
-                player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Kamu tidak memiliki permission untuk menggunakan material ini").build());
+                player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu tidak memiliki permission untuk menggunakan material ini").build());
             }
         }
         return true;
@@ -237,7 +237,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         if (args.length < 2) {
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/pwarp location <name-warp>").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/pwarp location <name-warp>").build());
             return false;
         }
 
@@ -247,13 +247,13 @@ public class WarpCommand implements CommandExecutor {
         Map<String, Warp> warpMap = warpManager.getWarps();
 
         if (!warpMap.containsKey(warpName)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Warp dengan nama <aqua>" + warpName + " tidak ditemukan!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Warp dengan nama <aqua>" + warpName + " tidak ditemukan!").build());
             return false;
         }
 
 
         if (blacklist.isBlacklistWorld(player)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Tidak bisa set location di tempat ini, karena world <aqua>" + player.getWorld().getName() + " <white>diblacklist!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa set location di tempat ini, karena world <aqua>" + player.getWorld().getName() + " <white>diblacklist!").build());
             return false;
         }
 
@@ -265,20 +265,20 @@ public class WarpCommand implements CommandExecutor {
                 .addCheck(new RedProtectChecker());
 
         if (!safeLocation.isSafeLocation(player, player.getLocation())) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Tidak bisa set location disini karena tempat ini tidak aman!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa set location disini karena tempat ini tidak aman!").build());
             return false;
         }
 
         Warp warp = warpMap.get(warpName);
 
         if (!warp.getOwnerUUID().equals(player.getUniqueId().toString())) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Kamu tidak memiliki izin set location warp <aqua>" + warpName).build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu tidak memiliki izin set location warp <aqua>" + warpName).build());
             return false;
         }
 
         warp.setLocation(player.getLocation());
 
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Berhasil mengubah set location dari warp <aqua>" + warpName).build());
+        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Berhasil mengubah set location dari warp <aqua>" + warpName).build());
 
         return true;
     }
@@ -290,7 +290,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         if (args.length < 3) {
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/pwarp description <name-warp> <description>").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/pwarp description <name-warp> <description>").build());
             return false;
         }
 
@@ -309,14 +309,14 @@ public class WarpCommand implements CommandExecutor {
         Map<String, Warp> warpMap = warpManager.getWarps();
 
         if (!warpMap.containsKey(warpName)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Warp dengan nama <aqua>" + warpName + " tidak ditemukan!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Warp dengan nama <aqua>" + warpName + " tidak ditemukan!").build());
             return false;
         }
 
         Warp warp = warpMap.get(warpName);
         warp.setDescription(description);
 
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Berhasil mengubah deskripsi warp <aqua>" + warpName + " <white>menjadi <aqua>" + description).build());
+        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Berhasil mengubah deskripsi warp <aqua>" + warpName + " <white>menjadi <aqua>" + description).build());
         return true;
     }
 
@@ -340,7 +340,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         if (args.length < 2) {
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/pwarp visit <name-warp>").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/pwarp visit <name-warp>").build());
             return false;
         }
 
@@ -348,7 +348,7 @@ public class WarpCommand implements CommandExecutor {
         Warp warp = warpManager.getWarp(name);
 
         if (warp == null) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Nama dengan nama <aqua>" + name + " tidak ditemukan!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Nama dengan nama <aqua>" + name + " tidak ditemukan!").build());
             return false;
         }
 
@@ -369,13 +369,13 @@ public class WarpCommand implements CommandExecutor {
                 .addCheck(new RedProtectChecker());
 
         if (!safeLocation.isSafeLocation(player, location)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Tidak bisa teleport ke warp <aqua>" + name + ", <white>karena tempat ini tidak aman!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa teleport ke warp <aqua>" + name + ", <white>karena tempat ini tidak aman!").build());
             return false;
         }
 
         player.teleport(location);
         warp.incrementVisitor();
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Kamu berhasil di teleport ke warp <aqua>" + name).build());
+        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu berhasil di teleport ke warp <aqua>" + name).build());
         return true;
     }
 
@@ -386,7 +386,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         if (args.length < 2) {
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>/pwarp delete <name-warp>").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>/pwarp delete <name-warp>").build());
             return false;
         }
 
@@ -394,17 +394,17 @@ public class WarpCommand implements CommandExecutor {
         Warp warp = warpManager.getWarp(name);
 
         if (warp == null) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Warp dengan nama <aqua>" + name + " tidak ditemukan!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Warp dengan nama <aqua>" + name + " tidak ditemukan!").build());
             return false;
         }
 
         if (!warp.getOwnerUUID().equals(player.getUniqueId().toString())) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Kamu tidak memiliki izin untuk menghapus warp <aqua>" + name).build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu tidak memiliki izin untuk menghapus warp <aqua>" + name).build());
             return false;
         }
 
         warpManager.deleteWarp(name);
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Berhasil menghapus warp <aqua>" + name).build());
+        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Berhasil menghapus warp <aqua>" + name).build());
         return true;
     }
 

@@ -123,13 +123,13 @@ public class WarpListGUI {
                 .addCheck(new RedProtectChecker());
 
         if (!safeLocation.isSafeLocation(player, location)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Tidak bisa teleport ke warp <aqua>" + warpName + ", <white>karena tempat ini tidak aman!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa teleport ke warp <aqua>" + warpName + ", <white>karena tempat ini tidak aman!").build());
             return;
         }
 
         player.teleport(location);
         warp.incrementVisitor();
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <color:white>Kamu berhasil di teleport ke warp <aqua>" + warpName).build());
+        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu berhasil di teleport ke warp <aqua>" + warpName).build());
     }
 
     private void createNavigationPane(GUIBuilder guiBuilder, int page) {

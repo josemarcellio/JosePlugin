@@ -8,10 +8,22 @@ loadbefore:
   - Essentials
 commands:
   dailyreward:
-    aliases: []
+    aliases:
+      - dailyrewards
+      - dreward
+      - drewards
   party:
-    aliases: []
+    aliases:
+      - partys
+      - parties
   playerwarp:
-    aliases: []
+    aliases:
+      - playerwarps
+      - pwarp
+      - pwarps
   job:
-    aliases: []
+    aliases:
+      - jobs
+  troll:
+    aliases:
+      - trolls

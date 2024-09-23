@@ -2,8 +2,13 @@ package com.josemarcellio.joseplugin.chat.render;
 
 import com.josemarcellio.joseplugin.chat.filter.BadWordFilter;
 import com.josemarcellio.joseplugin.chat.manager.BadWordManager;
+
 import com.josemarcellio.joseplugin.component.ComponentBuilder;
 
+import com.josemarcellio.joseplugin.cooldown.ICooldownManager;
+import com.josemarcellio.joseplugin.text.TextBuilder;
+import com.josemarcellio.joseplugin.text.module.ReverseText;
+import com.josemarcellio.joseplugin.text.module.UnscrambleText;
 import io.papermc.paper.chat.ChatRenderer;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.audience.Audience;
@@ -18,9 +23,12 @@ public class CustomChatRenderer implements ChatRenderer {
     private final String chatFormat;
     private final ComponentBuilder componentBuilder = new ComponentBuilder();
     private final BadWordFilter badWordFilter = new BadWordFilter(new BadWordManager());
+    private final ICooldownManager cooldownManager;
+    private final TextBuilder textBuilder = new TextBuilder();
 
-    public CustomChatRenderer(String chatFormat) {
+    public CustomChatRenderer(String chatFormat, ICooldownManager cooldownManager) {
         this.chatFormat = chatFormat;
+        this.cooldownManager = cooldownManager;
     }
 
     @Override
@@ -28,9 +36,15 @@ public class CustomChatRenderer implements ChatRenderer {
                                      @NotNull Component message, @NotNull Audience viewer) {
 
         String resolved = PlaceholderAPI.setPlaceholders(source, chatFormat);
-        String componentMessage = PlainTextComponentSerializer.plainText().serialize(message);
+        String unComponentMessage = PlainTextComponentSerializer.plainText().serialize(message);
 
-        String filteredMessage = badWordFilter.filterBadWords(componentMessage);
+        String filteredMessage = badWordFilter.filterBadWords(unComponentMessage);
+
+        filteredMessage = textBuilder
+                .addOperationIf(cooldownManager.isOnCooldown(source.getUniqueId(), "reverse"), new ReverseText())
+                .addOperationIf(cooldownManager.isOnCooldown(source.getUniqueId(), "unscramble"), new UnscrambleText())
+                .applyOperations(filteredMessage);
+
         Component finalMessage = Component.text(filteredMessage);
 
         return componentBuilder.tagResolverBuilder(resolved)

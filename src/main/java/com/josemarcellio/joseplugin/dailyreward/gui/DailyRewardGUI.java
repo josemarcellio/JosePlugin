@@ -108,7 +108,7 @@ public class DailyRewardGUI {
     private void claimReward(Player player) {
         plugin.getEconomy().depositPlayer(player, 500);
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission settemp joseplugin.dailyrewards true 24h");
-        player.sendMessage(componentBuilder.singleComponentBuilder("<yellow> ⛃ <color:#fae7b5>Daily Reward <color:#c4c3d0>• <color:white>Berhasil claim <aqua>500 Coins <white>dari Daily Reward!").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder("<yellow> ⛃ <color:#fae7b5>Daily Reward <color:#c4c3d0>• <white>Berhasil claim <aqua>500 Coins <white>dari Daily Reward!").build());
     }
 
     private String getCooldownTimeFormatted(Player player) {
