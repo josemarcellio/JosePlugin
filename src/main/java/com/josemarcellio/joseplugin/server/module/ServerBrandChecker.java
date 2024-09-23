@@ -5,12 +5,12 @@ import com.josemarcellio.joseplugin.server.IChecker;
 public class ServerBrandChecker implements IChecker {
 
     @Override
-    public boolean isValid() {
+    public boolean isInvalid() {
         try {
             Class.forName("com.destroystokyo.paper.console.PaperConsole");
-            return true;
-        } catch (ClassNotFoundException ignored) {
             return false;
+        } catch (ClassNotFoundException ignored) {
+            return true;
         }
     }
 }

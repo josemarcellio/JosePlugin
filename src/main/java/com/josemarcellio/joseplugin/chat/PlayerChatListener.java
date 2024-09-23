@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.entity.Player;
 
-@SuppressWarnings("unused")
 public class PlayerChatListener implements Listener {
 
     private final ICooldownManager cooldownManager;
@@ -16,6 +15,7 @@ public class PlayerChatListener implements Listener {
         this.cooldownManager = cooldownManager;
     }
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void onChat(AsyncChatEvent event) {
         Player player = event.getPlayer();

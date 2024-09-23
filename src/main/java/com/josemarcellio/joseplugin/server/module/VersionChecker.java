@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 public class VersionChecker implements IChecker {
 
     @Override
-    public boolean isValid() {
+    public boolean isInvalid() {
         String currentVersion = Bukkit.getVersion();
-        return currentVersion.compareTo("1.21.1") >= 0;
+        return currentVersion.compareTo("1.21.1") < 0;
     }
 }

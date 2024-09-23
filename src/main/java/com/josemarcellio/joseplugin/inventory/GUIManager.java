@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@SuppressWarnings("unused")
 public class GUIManager implements Listener {
     private static final Map<UUID, GUIPage> openGUIs = new HashMap<>();
 
@@ -27,6 +26,7 @@ public class GUIManager implements Listener {
         }
     }
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void handleClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
@@ -42,6 +42,7 @@ public class GUIManager implements Listener {
         }
     }
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();

@@ -19,7 +19,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class JosePlugin extends JavaPlugin {
 
     private final List<Plugin> loadedPlugins = new ArrayList<>();
@@ -36,10 +35,10 @@ public class JosePlugin extends JavaPlugin {
         IChecker versionChecker = new VersionChecker();
         this.dependencyManager = new DependencyManager();
 
-        if (!serverBrandChecker.isValid()) {
+        if (serverBrandChecker.isInvalid()) {
             getLogger().info("JosePlugin is only compatible with Paper or Paper Fork!");
             getServer().shutdown();
-        } else if (!versionChecker.isValid()) {
+        } else if (versionChecker.isInvalid()) {
             getLogger().info("JosePlugin requires at least version 1.21.1!");
             getServer().shutdown();
         } else {
@@ -88,6 +87,7 @@ public class JosePlugin extends JavaPlugin {
         return jobProgressionData;
     }
 
+    @SuppressWarnings("ConstantConditions")
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;

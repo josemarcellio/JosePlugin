@@ -52,9 +52,9 @@ public class TrollCommand implements CommandExecutor {
         }
 
         return switch (module) {
-            case "reverse" -> handleReverse(sender, target, duration, args);
-            case "unscramble" -> handleUnscramble(sender, target, duration, args);
-            case "reset" -> handleReset(sender, target, module, args);
+            case "reverse" -> handleReverse(sender, target, duration);
+            case "unscramble" -> handleUnscramble(sender, target, duration);
+            case "reset" -> handleReset(sender, target, module);
             default -> {
                 handleHelp(sender);
                 yield true;
@@ -70,7 +70,7 @@ public class TrollCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean handleReverse(CommandSender sender, Player target, long duration, String[] args) {
+    private boolean handleReverse(CommandSender sender, Player target, long duration) {
         if (!sender.hasPermission("joseplugin.troll")) {
             sender.sendMessage(componentBuilder.singleComponentBuilder("<light_purple> ☣ <color:#fae7b5>Troll <color:#c4c3d0>• <white>Kamu tidak memiliki permission joseplugin.troll untuk mengakses command ini!").build());
             return false;
@@ -81,7 +81,7 @@ public class TrollCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean handleUnscramble(CommandSender sender, Player target, long duration, String[] args) {
+    private boolean handleUnscramble(CommandSender sender, Player target, long duration) {
         if (!sender.hasPermission("joseplugin.troll")) {
             sender.sendMessage(componentBuilder.singleComponentBuilder("<light_purple> ☣ <color:#fae7b5>Troll <color:#c4c3d0>• <white>Kamu tidak memiliki permission joseplugin.troll untuk mengakses command ini!").build());
             return false;
@@ -92,7 +92,7 @@ public class TrollCommand implements CommandExecutor {
         return true;
     }
 
-    private boolean handleReset(CommandSender sender, Player target, String module, String[] args) {
+    private boolean handleReset(CommandSender sender, Player target, String module) {
         if (!sender.hasPermission("joseplugin.troll")) {
             sender.sendMessage(componentBuilder.singleComponentBuilder("<light_purple> ☣ <color:#fae7b5>Troll <color:#c4c3d0>• <white>Kamu tidak memiliki permission joseplugin.troll untuk mengakses command ini!").build());
             return false;

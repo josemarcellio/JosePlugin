@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-@SuppressWarnings("unused")
 public class PartyListener implements Listener {
 
     private final PartyManager partyManager;
@@ -17,6 +16,7 @@ public class PartyListener implements Listener {
     }
 
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player damaged && event.getDamager() instanceof Player damager) {
