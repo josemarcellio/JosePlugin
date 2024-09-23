@@ -7,6 +7,8 @@ import com.josemarcellio.joseplugin.component.ComponentBuilder;
 
 import com.josemarcellio.joseplugin.cooldown.ICooldownManager;
 import com.josemarcellio.joseplugin.text.TextBuilder;
+import com.josemarcellio.joseplugin.text.module.LeetSpeakText;
+import com.josemarcellio.joseplugin.text.module.RemoveVowelsText;
 import com.josemarcellio.joseplugin.text.module.ReverseText;
 import com.josemarcellio.joseplugin.text.module.UnscrambleText;
 import io.papermc.paper.chat.ChatRenderer;
@@ -43,11 +45,13 @@ public class CustomChatRenderer implements ChatRenderer {
         filteredMessage = textBuilder
                 .addOperationIf(cooldownManager.isOnCooldown(source.getUniqueId(), "reverse"), new ReverseText())
                 .addOperationIf(cooldownManager.isOnCooldown(source.getUniqueId(), "unscramble"), new UnscrambleText())
+                .addOperationIf(cooldownManager.isOnCooldown(source.getUniqueId(), "leetspeak"), new LeetSpeakText())
+                .addOperationIf(cooldownManager.isOnCooldown(source.getUniqueId(), "removevowels"), new RemoveVowelsText())
                 .applyOperations(filteredMessage);
 
         Component finalMessage = Component.text(filteredMessage);
 
-        return componentBuilder.tagResolverBuilder(resolved)
+        return componentBuilder.tagResolverBuilder().text(resolved)
                 .placeholders(Placeholder.component("player", sourceDisplayName))
                 .placeholders(Placeholder.component("message", finalMessage)).build();
     }

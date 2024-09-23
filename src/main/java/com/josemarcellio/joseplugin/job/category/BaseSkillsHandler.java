@@ -40,7 +40,7 @@ public abstract class BaseSkillsHandler {
             if (!cooldownManager.isOnCooldown(playerUUID, action)) {
                 applyEffects(player);
                 cooldownManager.startCooldown(playerUUID, action, 3000);
-                player.sendMessage(componentBuilder.singleComponentBuilder("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Berhasil mengaktifkan skills " + getPlugin().getJobsManager().getDisplayName(getJobName()) + "<white>, Cooldown 3 menit!").build());
+                player.sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Berhasil mengaktifkan skills " + getPlugin().getJobsManager().getDisplayName(getJobName()) + "<white>, Cooldown 3 menit!").build());
             }
         }
     }

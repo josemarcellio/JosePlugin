@@ -35,7 +35,7 @@ public class PartyGUI {
     }
 
     public void open(Player player, int page) {
-        GUIBuilder guiBuilder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Party GUI</aqua>").build(), 54);
+        GUIBuilder guiBuilder = new GUIBuilder(componentBuilder.singleComponentBuilder().text("<aqua>Party GUI</aqua>").build(), 54);
         createPartyPane(guiBuilder, player, page);
         createNavigationPane(guiBuilder, player, page);
 
@@ -56,13 +56,19 @@ public class PartyGUI {
             for (int i = startIndex; i < endIndex; i++) {
                 UUID memberUUID = members.get(i);
                 OfflinePlayer memberPlayer = Bukkit.getOfflinePlayer(memberUUID);
-                String leader = memberUUID.equals(party.getLeader()) ? "<red>(Leader)</red>" : "<yellow>(Member)</yellow>";
+
+                Component leader = componentBuilder.singleComponentBuilder()
+                        .addOperationIf(memberUUID.equals(party.getLeader()),
+                                "<aqua>" + memberPlayer.getName() + "</aqua>" + " " +"<red>(Leader)</red>",
+                                "<aqua>" + memberPlayer.getName() + "</aqua>" + " " +"<yellow>(Member)</yellow>")
+                        .build();
+
 
                 guiBuilder.addItem(SLOT_INDEXES[i - startIndex], new GUIItem(
                         itemBuilderFactory.createSkullItemBuilder(
                                         "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Q2MDUzNGUyMmUzNzE0NzVkNTQzNGQwZjQ5YWUwNThkMzk0MWIwM2E3YzUwYTZlZWYyOTYyMGM2OTI3NzhlMCJ9fX0=",
                                         SkullType.BASE64)
-                                .setName(componentBuilder.singleComponentBuilder("<aqua>" + memberPlayer.getName() + "</aqua>" + " " + leader).build())
+                                .setName(leader)
                                 .build(),
                         event -> {
                             if (player.getUniqueId().equals(party.getLeader()) && !memberUUID.equals(party.getLeader())) {
@@ -76,7 +82,7 @@ public class PartyGUI {
 
             String modeName = party.getMode() == Party.PartyMode.FRIENDLY ? "<green>Friendly Mode" : "<red>Duel Mode";
             guiBuilder.addItem(53, new GUIItem(itemBuilderFactory.createItemBuilder(Material.PAPER)
-                    .setName(componentBuilder.singleComponentBuilder(modeName).build())
+                    .setName(componentBuilder.singleComponentBuilder().text(modeName).build())
                     .build(), event -> {
                 Party.PartyMode newMode = party.getMode() == Party.PartyMode.FRIENDLY ? Party.PartyMode.DUEL : Party.PartyMode.FRIENDLY;
                 party.setMode(newMode);
@@ -91,7 +97,7 @@ public class PartyGUI {
 
         if (page > 1) {
             guiBuilder.addItem(45, new GUIItem(itemBuilderFactory.createItemBuilder(Material.ARROW)
-                    .setName(componentBuilder.singleComponentBuilder("<red>Back").build())
+                    .setName(componentBuilder.singleComponentBuilder().text("<red>Back").build())
                     .build(), event -> {
                 event.setCancelled(true);
                 open(player, page - 1);
@@ -100,7 +106,7 @@ public class PartyGUI {
 
         if ((page - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE < memberCount) {
             guiBuilder.addItem(53, new GUIItem(itemBuilderFactory.createItemBuilder(Material.ARROW)
-                    .setName(componentBuilder.singleComponentBuilder("<red>Next").build())
+                    .setName(componentBuilder.singleComponentBuilder().text("<red>Next").build())
                     .build(), event -> {
                 event.setCancelled(true);
                 open(player, page + 1);
@@ -127,7 +133,7 @@ public class PartyGUI {
     private void addItem(GUIBuilder builder) {
 
         GUIItem guiClose = new GUIItem(itemBuilderFactory.createSkullItemBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==", SkullType.BASE64)
-                .setName(componentBuilder.singleComponentBuilder("<red>Close</red>").build()).build(), event ->
+                .setName(componentBuilder.singleComponentBuilder().text("<red>Close</red>").build()).build(), event ->
                 event.getWhoClicked().closeInventory());
         builder.addItem(49, guiClose);
     }

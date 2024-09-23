@@ -52,7 +52,7 @@ public class DailyRewardGUI {
     }
 
     private void openRewardGUI(Player player, String texture, String name, String lore) {
-        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Daily Reward</aqua>").build(), 6 * 9);
+        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder().text("<aqua>Daily Reward</aqua>").build(), 6 * 9);
 
         addDailyReward(builder, player, texture, name, lore);
         addItem(builder);
@@ -65,8 +65,8 @@ public class DailyRewardGUI {
     private void addDailyReward(GUIBuilder builder, Player player, String texture, String name, String lore) {
         GUIItem guiReward = new GUIItem(
                 itemBuilderFactory.createSkullItemBuilder(texture, SkullType.BASE64)
-                        .setName(componentBuilder.singleComponentBuilder(name).build())
-                        .addLore(componentBuilder.singleComponentBuilder(lore).build())
+                        .setName(componentBuilder.singleComponentBuilder().text(name).build())
+                        .addLore(componentBuilder.singleComponentBuilder().text(lore).build())
                         .build(),
                 event -> {
                     if (!hasClaimed(player)) {
@@ -96,7 +96,7 @@ public class DailyRewardGUI {
     private void addItem(GUIBuilder builder) {
 
         GUIItem guiClose = new GUIItem(itemBuilderFactory.createSkullItemBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==", SkullType.BASE64)
-                .setName(componentBuilder.singleComponentBuilder("<red>Close</red>").build()).build(), event ->
+                .setName(componentBuilder.singleComponentBuilder().text("<red>Close</red>").build()).build(), event ->
                 event.getWhoClicked().closeInventory());
         builder.addItem(49, guiClose);
     }
@@ -108,7 +108,7 @@ public class DailyRewardGUI {
     private void claimReward(Player player) {
         plugin.getEconomy().depositPlayer(player, 500);
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission settemp joseplugin.dailyrewards true 24h");
-        player.sendMessage(componentBuilder.singleComponentBuilder("<yellow> ⛃ <color:#fae7b5>Daily Reward <color:#c4c3d0>• <white>Berhasil claim <aqua>500 Coins <white>dari Daily Reward!").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ⛃ <color:#fae7b5>Daily Reward <color:#c4c3d0>• <white>Berhasil claim <aqua>500 Coins <white>dari Daily Reward!").build());
     }
 
     private String getCooldownTimeFormatted(Player player) {

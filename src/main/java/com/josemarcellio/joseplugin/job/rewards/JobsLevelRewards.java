@@ -25,9 +25,9 @@ public class JobsLevelRewards {
         
         econ.depositPlayer(player, econReward);
 
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green>-------------------------").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<gold> ⭐ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>level " + level + " <white>rewards:").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<dark_gray> - <yellow>" + econReward + " <gray>Coins").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green>-------------------------").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<green>-------------------------").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<gold> ⭐ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>level " + level + " <white>rewards:").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<dark_gray> - <yellow>" + econReward + " <gray>Coins").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<green>-------------------------").build());
     }
 }

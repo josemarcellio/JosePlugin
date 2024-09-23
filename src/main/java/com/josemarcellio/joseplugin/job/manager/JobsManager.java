@@ -178,7 +178,7 @@ public class JobsManager {
             if (data.getLevel() > previousLevel) {
                 Player player = plugin.getServer().getPlayer(playerUUID);
                 if (player != null && player.isOnline()) {
-                    player.sendMessage(componentBuilder.singleComponentBuilder("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Selamat jobs " + getDisplayName(data.getJob()) + " <white>telah naik ke level <green>" + data.getLevel() + "<gray>!").build());
+                    player.sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Selamat jobs " + getDisplayName(data.getJob()) + " <white>telah naik ke level <green>" + data.getLevel() + "<gray>!").build());
 
                     rewardsManager.giveLevelUpRewards(player, data.getLevel());
                 }

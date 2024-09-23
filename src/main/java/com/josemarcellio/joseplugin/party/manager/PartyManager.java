@@ -22,9 +22,9 @@ public class PartyManager {
                 Party party = new Party(leader);
                 playerPartyMap.put(leaderUUID, party);
             }
-            leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Berhasil membuat party!").build());
+            leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Berhasil membuat party!").build());
         } else {
-            leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang berada di dalam party!").build());
+            leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang berada di dalam party!").build());
         }
     }
 
@@ -32,23 +32,23 @@ public class PartyManager {
         Party party = getPlayerParty(leader.getUniqueId());
         if (isPlayerInParty(leader.getUniqueId())) {
             if (!getPlayerParty(leader.getUniqueId()).isLeader(leader)) {
-                leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Hanya party leader yang dapat membubarkan party!").build());
+                leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Hanya party leader yang dapat membubarkan party!").build());
                 return;
             }
             for (UUID member : party.getMembers()) {
                 if (!member.equals(leader.getUniqueId())) {
                     Player memberPlayer = Bukkit.getPlayer(member);
                     if (memberPlayer != null) {
-                        memberPlayer.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + leader.getName() + " <white>telah membubarkan party ini!").build());
+                        memberPlayer.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + leader.getName() + " <white>telah membubarkan party ini!").build());
                     }
                 }
             }
             if (party.isLeader(leader)) {
                 party.getMembers().forEach(playerPartyMap::remove);
             }
-            leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Party berhasil dibubarkan!").build());
+            leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Party berhasil dibubarkan!").build());
         } else {
-            leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
+            leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
         }
     }
 
@@ -56,19 +56,19 @@ public class PartyManager {
 
         if (isPlayerInParty(leader.getUniqueId())) {
             if (!getPlayerParty(leader.getUniqueId()).isLeader(leader)) {
-                leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Hanya leader yang dapat mengirimkan undangan party!").build());
+                leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Hanya leader yang dapat mengirimkan undangan party!").build());
                 return;
             }
 
             if (playerToInvite != null) {
                 UUID playerToInviteUUID = playerToInvite.getUniqueId();
                 if (playerToInvite.equals(leader)) {
-                    leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak dapat mengirimkan undangan party kepada diri sendiri!").build());
+                    leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak dapat mengirimkan undangan party kepada diri sendiri!").build());
                 } else if (isPlayerInParty(playerToInvite.getUniqueId())) {
-                    leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + playerToInvite.getName() + " <white>telah berada di dalam party!").build());
+                    leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + playerToInvite.getName() + " <white>telah berada di dalam party!").build());
                 } else {
                     if (pendingInvites.containsKey(playerToInviteUUID)) {
-                        leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sudah mengirimkan undangan party kepada <aqua>" + playerToInvite.getName()).build());
+                        leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sudah mengirimkan undangan party kepada <aqua>" + playerToInvite.getName()).build());
                         return;
                     }
 
@@ -79,20 +79,20 @@ public class PartyManager {
                             PartyInvite invite = new PartyInvite(party, playerToInvite);
                             pendingInvites.put(playerToInviteUUID, invite);
                             String message = "<hover:show_text:\"<red>Klik untuk bergabung dengan party!\"><click:run_command:/party accept " + leader.getName() + "><aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + leader.getName() + " <white>telah mengirimkan undangan party. Ketik /party accept <aqua>" + leader.getName() + " <white>atau klik pesan ini untuk bergabung dengan party, undangan ini kadaluarsa dalam 1 menit!</click>";
-                            playerToInvite.sendMessage(componentBuilder.singleComponentBuilder(message).build());
+                            playerToInvite.sendMessage(componentBuilder.singleComponentBuilder().text(message).build());
 
                             scheduleInviteExpiration(leader, playerToInvite);
                         }
                     } else {
-                        leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + playerToInvite.getName() + " <white>sudah berada di dalam party!").build());
+                        leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + playerToInvite.getName() + " <white>sudah berada di dalam party!").build());
                     }
-                    leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah mengirimkan undangan party kepada <aqua>" + playerToInvite.getName()).build());
+                    leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah mengirimkan undangan party kepada <aqua>" + playerToInvite.getName()).build());
                 }
             } else {
-                leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Pemain tidak ditemukan!").build());
+                leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Pemain tidak ditemukan!").build());
             }
         } else {
-            leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
+            leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
         }
     }
 
@@ -108,8 +108,8 @@ public class PartyManager {
             public void run() {
                 if (pendingInvites.containsKey(playerToInviteUUID)) {
                     pendingInvites.remove(playerToInviteUUID);
-                    leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Undangan party untuk <aqua>" + playerToInvite.getName() + " <white>telah kadaluarsa karena tidak ada jawaban sama sekali!").build());
-                    playerToInvite.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Undangan party dari <aqua>" + leader.getName() + " <white>telah kadaluarsa karena kamu tidak menerimanya!").build());
+                    leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Undangan party untuk <aqua>" + playerToInvite.getName() + " <white>telah kadaluarsa karena tidak ada jawaban sama sekali!").build());
+                    playerToInvite.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Undangan party dari <aqua>" + leader.getName() + " <white>telah kadaluarsa karena kamu tidak menerimanya!").build());
                 }
             }
         }, 60000);
@@ -129,13 +129,13 @@ public class PartyManager {
                 for (UUID member : party.getMembers()) {
                     Player memberPlayer = Bukkit.getPlayer(member);
                     if (memberPlayer != null) {
-                        memberPlayer.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + playerToInvite.getName() + " <white>telah bergabung kedalam party!").build());
+                        memberPlayer.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + playerToInvite.getName() + " <white>telah bergabung kedalam party!").build());
                     }
                 }
             }
-            playerToInvite.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu berhasil bergabung dengan party <aqua>" + leader.getName()).build());
+            playerToInvite.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu berhasil bergabung dengan party <aqua>" + leader.getName()).build());
         } else {
-            playerToInvite.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Tidak ada permintaan undangan dari <aqua>" + leader.getName() + " <white>atau undangan telah kadaluarsa!").build());
+            playerToInvite.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Tidak ada permintaan undangan dari <aqua>" + leader.getName() + " <white>atau undangan telah kadaluarsa!").build());
         }
     }
 
@@ -148,15 +148,15 @@ public class PartyManager {
                 Player leader = Bukkit.getPlayer(invite.getParty().getLeader());
                 pendingInvites.remove(playerUUID);
 
-                player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah menolak undangan party.").build());
+                player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah menolak undangan party.").build());
 
                 if (leader != null) {
-                    player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah menolak undangan party dari <aqua>" + leader.getName()).build());
-                    leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + player.getName() + " <white>telah menolak undangan party dari mu!").build());
+                    player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah menolak undangan party dari <aqua>" + leader.getName()).build());
+                    leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + player.getName() + " <white>telah menolak undangan party dari mu!").build());
                 }
             }
         } else {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak memiliki undangan party untuk ditolak!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak memiliki undangan party untuk ditolak!").build());
         }
     }
 
@@ -166,7 +166,7 @@ public class PartyManager {
         Party party = getPlayerParty(leader.getUniqueId());
         if (isPlayerInParty(leader.getUniqueId())) {
             if (!getPlayerParty(leader.getUniqueId()).isLeader(leader)) {
-                leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Hanya leader yang dapat mengeluarkan pemain!").build());
+                leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Hanya leader yang dapat mengeluarkan pemain!").build());
                 return;
             }
             if (party != null && party.getMembers().contains(leader.getUniqueId())) {
@@ -175,17 +175,17 @@ public class PartyManager {
                     playerPartyMap.remove(playerToKickUUID);
                     if (playerToKick.isOnline()) {
                         Player onlinePlayer = (Player) playerToKick;
-                        onlinePlayer.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah dikeluarkan dari party!").build());
+                        onlinePlayer.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah dikeluarkan dari party!").build());
                     }
-                    leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + playerToKick.getName() + " <white>telah dikeluarkan dari party!").build());
+                    leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + playerToKick.getName() + " <white>telah dikeluarkan dari party!").build());
                 } else {
-                    leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak dapat mengeluarkan dirimu sendiri dalam party!").build());
+                    leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak dapat mengeluarkan dirimu sendiri dalam party!").build());
                 }
             } else {
-                leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Pemain tidak ditemukan atau bukan anggota party").build());
+                leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Pemain tidak ditemukan atau bukan anggota party").build());
             }
         } else {
-            leader.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
+            leader.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
         }
     }
 
@@ -194,22 +194,22 @@ public class PartyManager {
         Party party = getPlayerParty(playerUUID);
         if (party != null) {
             if (party.isLeader(player)) {
-                player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak dapat keluar dari party! silahkan gunakan /party disband").build());
+                player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak dapat keluar dari party! silahkan gunakan /party disband").build());
             } else {
                 for (UUID member : party.getMembers()) {
                     if (!member.equals(playerUUID)) {
                         Player memberPlayer = Bukkit.getPlayer(member);
                         if (memberPlayer != null) {
-                            memberPlayer.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + player.getName() + " <white>telah keluar dari party!").build());
+                            memberPlayer.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <aqua>" + player.getName() + " <white>telah keluar dari party!").build());
                         }
                     }
                 }
                 party.removeMember(player);
                 playerPartyMap.remove(playerUUID);
-                player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu berhasil keluar dari party").build());
+                player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu berhasil keluar dari party").build());
             }
         } else {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
         }
     }
 
@@ -218,28 +218,28 @@ public class PartyManager {
             Party party = getPlayerParty(player.getUniqueId());
 
             if (!party.isLeader(player)) {
-                player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Hanya leader yang dapat memindahkan kepemimpinan!").build());
+                player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Hanya leader yang dapat memindahkan kepemimpinan!").build());
                 return;
             }
 
             if (party.getMembers().contains(target.getUniqueId())) {
                 if (target.getUniqueId().equals(player.getUniqueId())) {
-                    player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak dapat memindahkan leader ke diri sendiri!").build());
+                    player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu tidak dapat memindahkan leader ke diri sendiri!").build());
                     return;
                 }
 
                 party.setLeader(target.getUniqueId());
-                player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Leader telah dipindahkan ke <aqua>" + target.getName()).build());
+                player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Leader telah dipindahkan ke <aqua>" + target.getName()).build());
 
                 Player targetPlayer = target.getPlayer();
                 if (targetPlayer != null && targetPlayer.isOnline()) {
-                    targetPlayer.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sekarang menjadi leader dari party ini!").build());
+                    targetPlayer.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sekarang menjadi leader dari party ini!").build());
                 }
             } else {
-                player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Pemain tidak ditemukan atau bukan anggota party!").build());
+                player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Pemain tidak ditemukan atau bukan anggota party!").build());
             }
         } else {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
         }
     }
 
@@ -276,9 +276,9 @@ public class PartyManager {
                 }
             }
 
-            player.sendMessage(componentBuilder.singleComponentBuilder("<gray>" + members).build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<gray>" + members).build());
         } else {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
         }
     }
 
@@ -286,14 +286,14 @@ public class PartyManager {
         Party party = getPlayerParty(sender.getUniqueId());
 
         if (party == null) {
-            sender.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
+            sender.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu sedang tidak berada di dalam party!").build());
             return;
         }
 
         for (UUID memberUUID : party.getMembers()) {
             Player member = Bukkit.getPlayer(memberUUID);
             if (member != null) {
-                member.sendMessage(componentBuilder.singleComponentBuilder("<light_purple>[Party] <aqua>" + sender.getName() + ": <white>" + message).build());
+                member.sendMessage(componentBuilder.singleComponentBuilder().text("<light_purple>[Party] <aqua>" + sender.getName() + ": <white>" + message).build());
             }
         }
     }

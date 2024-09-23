@@ -45,7 +45,7 @@ public class WarpListGUI {
     }
 
     public void open(Player player, int page) {
-        GUIBuilder guiBuilder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Daftar Warp</aqua>").build(), 54);
+        GUIBuilder guiBuilder = new GUIBuilder(componentBuilder.singleComponentBuilder().text("<aqua>Daftar Warp</aqua>").build(), 54);
 
         createWarpPane(guiBuilder, player, page);
 
@@ -78,23 +78,23 @@ public class WarpListGUI {
                 ItemBuilderFactory itemBuilderFactory = new ItemBuilderFactory();
 
                 List<Component> lore = Arrays.asList(
-                        componentBuilder.singleComponentBuilder("<gray>Owner:</gray> <aqua>" + warp.getOwner() + "</aqua>").build(),
-                        componentBuilder.singleComponentBuilder("<gray>World:</gray> <aqua>" + warp.getWorld() + "</aqua>").build(),
-                        componentBuilder.singleComponentBuilder("<gray>Location:</gray> <aqua>" + String.format("%.2f, %.2f, %.2f", warp.getX(), warp.getY(), warp.getZ()) + "</aqua>").build(),
-                        componentBuilder.singleComponentBuilder("<gray>Visitor:</gray> <aqua>" + warp.getVisitor() + "</aqua>").build(),
-                        componentBuilder.singleComponentBuilder("").build(),
-                        componentBuilder.singleComponentBuilder("<aqua>" + warp.getDescription() + "</aqua>").build(),
-                        componentBuilder.singleComponentBuilder("").build(),
-                        componentBuilder.singleComponentBuilder("<yellow>Klik kiri untuk teleport</yellow>").build()
+                        componentBuilder.singleComponentBuilder().text("<gray>Owner:</gray> <aqua>" + warp.getOwner() + "</aqua>").build(),
+                        componentBuilder.singleComponentBuilder().text("<gray>World:</gray> <aqua>" + warp.getWorld() + "</aqua>").build(),
+                        componentBuilder.singleComponentBuilder().text("<gray>Location:</gray> <aqua>" + String.format("%.2f, %.2f, %.2f", warp.getX(), warp.getY(), warp.getZ()) + "</aqua>").build(),
+                        componentBuilder.singleComponentBuilder().text("<gray>Visitor:</gray> <aqua>" + warp.getVisitor() + "</aqua>").build(),
+                        componentBuilder.singleComponentBuilder().text("").build(),
+                        componentBuilder.singleComponentBuilder().text("<aqua>" + warp.getDescription() + "</aqua>").build(),
+                        componentBuilder.singleComponentBuilder().text("").build(),
+                        componentBuilder.singleComponentBuilder().text("<yellow>Klik kiri untuk teleport</yellow>").build()
                 );
 
                 ItemStack item = warp.getTextures().equals("NONE") ?
                         itemBuilderFactory.createItemBuilder(warp.getMaterial())
-                                .setName(componentBuilder.singleComponentBuilder("<light_purple>" + warpName).build())
+                                .setName(componentBuilder.singleComponentBuilder().text("<light_purple>" + warpName).build())
                                 .setLore(lore)
                                 .build() :
                         itemBuilderFactory.createSkullItemBuilder(warp.getTextures(), SkullType.TEXTURE_ID)
-                                .setName(componentBuilder.singleComponentBuilder("<light_purple>" + warpName).build())
+                                .setName(componentBuilder.singleComponentBuilder().text("<light_purple>" + warpName).build())
                                 .setLore(lore)
                                 .build();
 
@@ -123,20 +123,20 @@ public class WarpListGUI {
                 .addCheck(new RedProtectChecker());
 
         if (!safeLocation.isSafeLocation(player, location)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa teleport ke warp <aqua>" + warpName + ", <white>karena tempat ini tidak aman!").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa teleport ke warp <aqua>" + warpName + ", <white>karena tempat ini tidak aman!").build());
             return;
         }
 
         player.teleport(location);
         warp.incrementVisitor();
-        player.sendMessage(componentBuilder.singleComponentBuilder("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu berhasil di teleport ke warp <aqua>" + warpName).build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu berhasil di teleport ke warp <aqua>" + warpName).build());
     }
 
     private void createNavigationPane(GUIBuilder guiBuilder, int page) {
         if (page > 1) {
             ItemStack backItem = new ItemStack(Material.ARROW);
             ItemMeta backMeta = backItem.getItemMeta();
-            backMeta.displayName(componentBuilder.singleComponentBuilder("<red>Back").build());
+            backMeta.displayName(componentBuilder.singleComponentBuilder().text("<red>Back").build());
             backItem.setItemMeta(backMeta);
 
             guiBuilder.addItem(45, new GUIItem(backItem, event -> {
@@ -149,7 +149,7 @@ public class WarpListGUI {
         if ((page - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE < getWarpCount()) {
             ItemStack nextItem = new ItemStack(Material.ARROW);
             ItemMeta nextMeta = nextItem.getItemMeta();
-            nextMeta.displayName(componentBuilder.singleComponentBuilder("<red>Next").build());
+            nextMeta.displayName(componentBuilder.singleComponentBuilder().text("<red>Next").build());
             nextItem.setItemMeta(nextMeta);
 
             guiBuilder.addItem(53, new GUIItem(nextItem, event -> {
@@ -163,7 +163,7 @@ public class WarpListGUI {
 
         ItemStack closeItem = itemBuilderFactory.createSkullItemBuilder("beb588b21a6f98ad1ff4e085c552dcb050efc9cab427f46048f18fc803475f7", SkullType.TEXTURE_ID).build();
         ItemMeta closeMeta = closeItem.getItemMeta();
-        closeMeta.displayName(componentBuilder.singleComponentBuilder("<red>Close").build());
+        closeMeta.displayName(componentBuilder.singleComponentBuilder().text("<red>Close").build());
         closeItem.setItemMeta(closeMeta);
     }
 
@@ -186,7 +186,7 @@ public class WarpListGUI {
     private void addItem(GUIBuilder builder) {
 
         GUIItem guiClose = new GUIItem(itemBuilderFactory.createSkullItemBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==", SkullType.BASE64)
-                .setName(componentBuilder.singleComponentBuilder("<red>Close</red>").build()).build(), event ->
+                .setName(componentBuilder.singleComponentBuilder().text("<red>Close</red>").build()).build(), event ->
                 event.getWhoClicked().closeInventory());
         builder.addItem(49, guiClose);
     }

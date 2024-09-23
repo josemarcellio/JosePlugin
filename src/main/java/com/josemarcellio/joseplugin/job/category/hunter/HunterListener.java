@@ -75,7 +75,7 @@ public class HunterListener extends BaseJobsHandler implements Listener {
         double exp = plugin.getJobProgressionData().getHunterMobExpMap().get(entityType);
         handleSharedExp(killer, exp);
 
-        Component format = componentBuilder.singleComponentBuilder("<gray>Level: <aqua>" + plugin.getJobsManager().getLevel(killer.getUniqueId()) + " <gray>(<aqua>" + plugin.getJobsManager().getExp(killer.getUniqueId()) +  "<dark_gray>/<aqua>" + (plugin.getJobsManager().getLevel(killer.getUniqueId()) * 100) + "<gray>)" + " (<light_purple>" + entityType.name() + "<gray>)").build();
+        Component format = componentBuilder.singleComponentBuilder().text("<gray>Level: <aqua>" + plugin.getJobsManager().getLevel(killer.getUniqueId()) + " <gray>(<aqua>" + plugin.getJobsManager().getExp(killer.getUniqueId()) +  "<dark_gray>/<aqua>" + (plugin.getJobsManager().getLevel(killer.getUniqueId()) * 100) + "<gray>)" + " (<light_purple>" + entityType.name() + "<gray>)").build();
         killer.sendActionBar(format);
 
         handleParticleAndDrop(killer, killedEntity.getLocation());

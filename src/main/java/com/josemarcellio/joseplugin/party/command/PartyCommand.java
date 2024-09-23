@@ -54,17 +54,17 @@ public class PartyCommand implements CommandExecutor {
     }
 
     private boolean handleHelp(Player player) {
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party create").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party invite <player>").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party accept <player>").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party deny <player>").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party kick <player>").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party disband").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party leave").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party member").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party gui").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party transfer <player>").build());
-        player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party chat <message>").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party create").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party invite <player>").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party accept <player>").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party deny <player>").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party kick <player>").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party disband").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party leave").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party member").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party gui").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party transfer <player>").build());
+        player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party chat <message>").build());
         return true;
     }
 
@@ -75,7 +75,7 @@ public class PartyCommand implements CommandExecutor {
 
     private boolean handleInvite(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party invite <player>").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party invite <player>").build());
             return false;
         }
         Player target = Bukkit.getPlayer(args[1]);
@@ -85,7 +85,7 @@ public class PartyCommand implements CommandExecutor {
 
     private boolean handleAcceptInvite(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party accept <leader>").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party accept <leader>").build());
             return false;
         }
 
@@ -107,7 +107,7 @@ public class PartyCommand implements CommandExecutor {
 
     private boolean handleKickPlayer(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party kick <player>").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party kick <player>").build());
             return false;
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
@@ -127,7 +127,7 @@ public class PartyCommand implements CommandExecutor {
 
     private boolean handleTransferLeader(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party transfer <player>").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party transfer <player>").build());
             return false;
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
@@ -143,7 +143,7 @@ public class PartyCommand implements CommandExecutor {
 
     private boolean handlePartyChat(Player player, String[] args) {
         if (args.length < 2) {
-            player.sendMessage(componentBuilder.singleComponentBuilder("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party chat <message>").build());
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>/party chat <message>").build());
             return false;
         }
         String message = String.join(" ", Arrays.copyOfRange(args, 1, args.length));

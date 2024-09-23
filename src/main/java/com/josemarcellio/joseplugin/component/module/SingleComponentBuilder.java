@@ -13,6 +13,11 @@ public class SingleComponentBuilder implements ComponentChecker<Component> {
         return this;
     }
 
+    public SingleComponentBuilder addOperationIf(boolean condition, String ifTrue, String ifFalse) {
+        this.text = condition ? ifTrue : ifFalse;
+        return this;
+    }
+
     @Override
     public Component build() {
         return MiniMessage.miniMessage().deserialize(text)

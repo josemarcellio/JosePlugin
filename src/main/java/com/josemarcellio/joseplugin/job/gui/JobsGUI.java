@@ -1,6 +1,7 @@
 package com.josemarcellio.joseplugin.job.gui;
 
 import com.josemarcellio.joseplugin.JosePlugin;
+import com.josemarcellio.joseplugin.component.module.SingleComponentBuilder;
 import com.josemarcellio.joseplugin.inventory.GUIItem;
 import com.josemarcellio.joseplugin.inventory.GUIManager;
 import com.josemarcellio.joseplugin.inventory.builder.GUIBuilder;
@@ -30,7 +31,7 @@ public class JobsGUI {
     }
 
     public  void openGUI(Player player) {
-        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Jobs Menu").build(), 6 * 9);
+        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder().text("<aqua>Jobs Menu").build(), 6 * 9);
 
         addJobItem(builder, player, "miner");
         addJobItem(builder, player, "hunter");
@@ -48,35 +49,34 @@ public class JobsGUI {
         JobsManager jobsManager = plugin.getJobsManager();
         String displayName = jobsManager.getDisplayName(job);
 
-        String joined;
-        if (jobsManager.getJob(player.getUniqueId()).equals(job)) {
-            joined = "<red>Kamu telah bergabung dengan jobs " + displayName;
-        } else {
-            joined = "<green>Klik untuk bergabung dengan jobs " + displayName;
-        }
+        Component joined = new SingleComponentBuilder()
+                .addOperationIf(jobsManager.getJob(player.getUniqueId()).equals(job),
+                        "<red>Kamu telah bergabung dengan jobs " + displayName,
+                        "<green>Klik untuk bergabung dengan jobs " + displayName)
+                .build();
 
         List<Component> lore = Arrays.asList(
-                componentBuilder.singleComponentBuilder("").build(),
-                componentBuilder.singleComponentBuilder("<gray>Total Worker: <aqua>" + jobsManager.getTotalWorkers(job) + "<dark_gray>/<aqua>" + jobsManager.getMaxWorkersPerJob()).build(),
-                componentBuilder.singleComponentBuilder("").build(),
-                componentBuilder.singleComponentBuilder("<green>Klik kiri <gray>untuk bergabung dengan jobs").build(),
-                componentBuilder.singleComponentBuilder("<yellow>Klik kanan <gray>untuk melihat required task").build(),
-                componentBuilder.singleComponentBuilder("<light_purple>Tombol 'Q' <gray>untuk keluar dari jobs").build(),
-                componentBuilder.singleComponentBuilder("").build(),
-                componentBuilder.singleComponentBuilder(joined).build()
+                componentBuilder.singleComponentBuilder().text("").build(),
+                componentBuilder.singleComponentBuilder().text("<gray>Total Worker: <aqua>" + jobsManager.getTotalWorkers(job) + "<dark_gray>/<aqua>" + jobsManager.getMaxWorkersPerJob()).build(),
+                componentBuilder.singleComponentBuilder().text("").build(),
+                componentBuilder.singleComponentBuilder().text("<green>Klik kiri <gray>untuk bergabung dengan jobs").build(),
+                componentBuilder.singleComponentBuilder().text("<yellow>Klik kanan <gray>untuk melihat required task").build(),
+                componentBuilder.singleComponentBuilder().text("<light_purple>Tombol 'Q' <gray>untuk keluar dari jobs").build(),
+                componentBuilder.singleComponentBuilder().text("").build(),
+                joined
         );
 
         GUIItem guiItem = new GUIItem(itemBuilderFactory.createSkullItemBuilder(jobsManager.getTextures(job), SkullType.TEXTURE_ID)
-        .setName(componentBuilder.singleComponentBuilder(jobsManager.getDisplayName(job)).build())
+        .setName(componentBuilder.singleComponentBuilder().text(jobsManager.getDisplayName(job)).build())
         .setLore(lore).build(),event -> {
             if (event.getClick().isLeftClick()) {
                 if (jobsManager.joinJob(player.getUniqueId(), job)) {
-                    event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Kamu berhasil bergabung dengan job " + displayName).build());
+                    event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Kamu berhasil bergabung dengan job " + displayName).build());
                     event.getWhoClicked().closeInventory();
                     openGUI(player);
                 } else {
                     if (!jobsManager.getJob(event.getWhoClicked().getUniqueId()).equals(job)) {
-                        event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Gagal bergabung dengan job " + displayName + " <white>silahkan keluar dari job " + jobsManager.getDisplayName(jobsManager.getJob(event.getWhoClicked().getUniqueId())) + " <white>terlebih dahulu!").build());
+                        event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Gagal bergabung dengan job " + displayName + " <white>silahkan keluar dari job " + jobsManager.getDisplayName(jobsManager.getJob(event.getWhoClicked().getUniqueId())) + " <white>terlebih dahulu!").build());
                     }
                 }
             } else if (event.getClick() == ClickType.DROP) {
@@ -114,18 +114,18 @@ public class JobsGUI {
     private void addItem(GUIBuilder builder) {
 
         GUIItem guiClose = new GUIItem(itemBuilderFactory.createSkullItemBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==", SkullType.BASE64)
-                .setName(componentBuilder.singleComponentBuilder("<red>Close</red>").build()).build(), event ->
+                .setName(componentBuilder.singleComponentBuilder().text("<red>Close</red>").build()).build(), event ->
                 event.getWhoClicked().closeInventory());
         builder.addItem(49, guiClose);
     }
 
     private int getSlotForJob(String job) {
-        switch (job) {
-            case "miner": return 20;
-            case "hunter": return 21;
-            case "farmer": return 22;
-            case "lumberjack": return 23;
-            default: return 0;
-        }
+        return switch (job) {
+            case "miner" -> 20;
+            case "hunter" -> 21;
+            case "farmer" -> 22;
+            case "lumberjack" -> 23;
+            default -> 0;
+        };
     }
 }

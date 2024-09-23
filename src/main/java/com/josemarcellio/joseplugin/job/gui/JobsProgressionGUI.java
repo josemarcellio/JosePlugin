@@ -34,7 +34,7 @@ public class JobsProgressionGUI {
     }
 
     public void openGUI(Player player, String jobs) {
-        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder("<aqua>Jobs Progression</aqua>").build(), 54); // 6 rows * 9 slots = 54
+        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder().text("<aqua>Jobs Progression</aqua>").build(), 54); // 6 rows * 9 slots = 54
 
         addProgressionItems(builder, jobs);
 
@@ -80,10 +80,8 @@ public class JobsProgressionGUI {
     private void addProgressionItem(GUIBuilder builder, Material material, double expValue, int slot) {
 
         builder.addItem(slot, new GUIItem(itemBuilderFactory.createItemBuilder(material)
-                .setName(componentBuilder.singleComponentBuilder(material.name()).build())
-                .addLore(componentBuilder.singleComponentBuilder("<gray>Exp: <aqua>" + expValue).build()).build(), event -> {
-            event.setCancelled(true);
-        }));
+                .setName(componentBuilder.singleComponentBuilder().text(material.name()).build())
+                .addLore(componentBuilder.singleComponentBuilder().text("<gray>Exp: <aqua>" + expValue).build()).build(), event -> event.setCancelled(true)));
     }
 
     private void addGlassPane(GUIBuilder builder) {
@@ -105,7 +103,7 @@ public class JobsProgressionGUI {
     private void addItem(GUIBuilder builder) {
 
         GUIItem guiClose = new GUIItem(itemBuilderFactory.createSkullItemBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==", SkullType.BASE64)
-                .setName(componentBuilder.singleComponentBuilder("<red>Close</red>").build()).build(), event ->
+                .setName(componentBuilder.singleComponentBuilder().text("<red>Close</red>").build()).build(), event ->
                 event.getWhoClicked().closeInventory());
         builder.addItem(49, guiClose);
     }

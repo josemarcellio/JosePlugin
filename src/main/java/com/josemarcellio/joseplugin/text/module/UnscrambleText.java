@@ -8,7 +8,7 @@ public class UnscrambleText implements TextOperation {
 
     @Override
     public String process(String input) {
-        char[] chars = input.replaceAll(" ", "").toCharArray(); // Hilangkan semua spasi
+        char[] chars = input.replaceAll(" ", "").toCharArray();
         Arrays.sort(chars);
 
         StringBuilder result = new StringBuilder();
