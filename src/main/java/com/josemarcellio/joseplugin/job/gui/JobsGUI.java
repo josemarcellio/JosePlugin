@@ -1,7 +1,7 @@
 package com.josemarcellio.joseplugin.job.gui;
 
 import com.josemarcellio.joseplugin.JosePlugin;
-import com.josemarcellio.joseplugin.component.module.SingleComponentBuilder;
+
 import com.josemarcellio.joseplugin.inventory.GUIItem;
 import com.josemarcellio.joseplugin.inventory.GUIManager;
 import com.josemarcellio.joseplugin.inventory.builder.GUIBuilder;
@@ -49,12 +49,6 @@ public class JobsGUI {
         JobsManager jobsManager = plugin.getJobsManager();
         String displayName = jobsManager.getDisplayName(job);
 
-        Component joined = new SingleComponentBuilder()
-                .addOperationIf(jobsManager.getJob(player.getUniqueId()).equals(job),
-                        "<red>Kamu telah bergabung dengan jobs " + displayName,
-                        "<green>Klik untuk bergabung dengan jobs " + displayName)
-                .build();
-
         List<Component> lore = Arrays.asList(
                 componentBuilder.singleComponentBuilder().text("").build(),
                 componentBuilder.singleComponentBuilder().text("<gray>Total Worker: <aqua>" + jobsManager.getTotalWorkers(job) + "<dark_gray>/<aqua>" + jobsManager.getMaxWorkersPerJob()).build(),
@@ -63,7 +57,11 @@ public class JobsGUI {
                 componentBuilder.singleComponentBuilder().text("<yellow>Klik kanan <gray>untuk melihat required task").build(),
                 componentBuilder.singleComponentBuilder().text("<light_purple>Tombol 'Q' <gray>untuk keluar dari jobs").build(),
                 componentBuilder.singleComponentBuilder().text("").build(),
-                joined
+                componentBuilder.singleComponentBuilder()
+                        .addOperationIf(jobsManager.getJob(player.getUniqueId()).equals(job),
+                                "<red>Kamu telah bergabung dengan jobs " + displayName,
+                                "<green>Klik untuk bergabung dengan jobs " + displayName)
+                        .build()
         );
 
         GUIItem guiItem = new GUIItem(itemBuilderFactory.createSkullItemBuilder(jobsManager.getTextures(job), SkullType.TEXTURE_ID)
