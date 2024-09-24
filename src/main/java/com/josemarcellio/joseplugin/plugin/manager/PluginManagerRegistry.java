@@ -37,20 +37,24 @@ import com.josemarcellio.joseplugin.playerwarp.command.WarpCommand;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
 import com.josemarcellio.joseplugin.playtime.command.PlaytimeCommand;
 
+import com.josemarcellio.joseplugin.silent.command.SilentKickCommand;
+import com.josemarcellio.joseplugin.silent.manager.SilentManager;
+import com.josemarcellio.joseplugin.silent.packet.SilentListener;
+
 public class PluginManagerRegistry implements PluginManager {
 
+    private final JosePlugin plugin;
     private final PluginListenerManager listenerManager;
     private final PluginCommandManager commandManager;
     private final WarpManager warpManager;
-    private final PartyManager partyManager;
-    private final JosePlugin plugin;
+    private final PartyManager partyManager = new PartyManager();
     private final ICooldownManager cooldownManager = new CooldownManager();
+    private final SilentManager silentManager = new SilentManager();
 
     public PluginManagerRegistry(JosePlugin plugin) {
         this.plugin = plugin;
         this.listenerManager = new PluginListenerManager(plugin);
         this.commandManager = new PluginCommandManager(plugin);
-        this.partyManager = new PartyManager();
         this.warpManager = new WarpManager(plugin);
     }
 
@@ -68,6 +72,8 @@ public class PluginManagerRegistry implements PluginManager {
         listenerManager.registerListener(new HunterSkills(plugin));
         listenerManager.registerListener(new MinerSkills(plugin));
         listenerManager.registerListener(new LumberjackSkills(plugin));
+
+        listenerManager.registerListener(new SilentListener(plugin, silentManager));
     }
 
     @Override
@@ -78,5 +84,6 @@ public class PluginManagerRegistry implements PluginManager {
         commandManager.registerCommand("job", new JobsCommand(plugin));
         commandManager.registerCommand("troll", new TrollCommand(cooldownManager));
         commandManager.registerCommand("playtime", new PlaytimeCommand());
+        commandManager.registerCommand("silentkick", new SilentKickCommand(silentManager));
     }
 }

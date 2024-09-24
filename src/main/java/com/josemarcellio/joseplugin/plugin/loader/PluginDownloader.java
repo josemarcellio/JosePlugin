@@ -31,6 +31,7 @@ public class PluginDownloader {
     public static final Map<String, String> PLUGIN_URLS = new HashMap<>() {{
         put("PlaceholderAPI", "http://ci.extendedclip.com/job/PlaceholderAPI/lastSuccessfulBuild/artifact/build/libs/PlaceholderAPI-2.11.7-DEV-200.jar");
         put("LuckPerms", "https://ci.lucko.me/job/LuckPerms/lastSuccessfulBuild/artifact/bukkit/loader/build/libs/LuckPerms-Bukkit-5.4.141.jar");
+        put("packetevents", "https://ci.codemc.io/job/retrooper/job/packetevents/lastSuccessfulBuild/artifact/spigot/build/libs/packetevents-spigot-2.5.1-SNAPSHOT.jar");
     }};
 
     public List<File> downloadPlugins(JavaPlugin plugin) throws JosePluginException {
