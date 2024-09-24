@@ -25,13 +25,13 @@ import com.josemarcellio.joseplugin.component.ComponentBuilder;
 
 import org.bukkit.entity.Player;
 
-public class JobsLeaveJobConfirmation {
+public class JobsLeaveConfirmationGUI {
 
     private final JosePlugin plugin;
     private final ComponentBuilder componentBuilder = new ComponentBuilder();
     private final ItemBuilderFactory itemBuilderFactory = new ItemBuilderFactory();
 
-    public JobsLeaveJobConfirmation(JosePlugin plugin) {
+    public JobsLeaveConfirmationGUI(JosePlugin plugin) {
         this.plugin = plugin;
     }
 

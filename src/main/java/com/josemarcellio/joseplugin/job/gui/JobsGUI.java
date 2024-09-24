@@ -98,7 +98,7 @@ public class JobsGUI {
             } else if (event.getClick() == ClickType.DROP) {
                 if (jobsManager.getJob(event.getWhoClicked().getUniqueId()).equals(job)) {
                     event.getWhoClicked().closeInventory();
-                    JobsLeaveJobConfirmation leaveJobConfirmation = new JobsLeaveJobConfirmation(plugin);
+                    JobsLeaveConfirmationGUI leaveJobConfirmation = new JobsLeaveConfirmationGUI(plugin);
                     leaveJobConfirmation.openGUI((Player) event.getWhoClicked());
                 }
             } else if (event.getClick().isRightClick()) {

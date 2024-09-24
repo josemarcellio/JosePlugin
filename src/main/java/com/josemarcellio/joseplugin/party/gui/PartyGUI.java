@@ -28,6 +28,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -82,7 +83,7 @@ public class PartyGUI {
                         componentBuilder.singleComponentBuilder().text("").build(),
                         componentBuilder.singleComponentBuilder()
                                 .addOperationIf(memberUUID.equals(party.getLeader()),
-                                        "<red>Kamu tidak dapat mengeluarkan dirimu sendiri",
+                                        "<red>Tidak dapat mengeluarkan Leader party",
                                         "<green>Tombol 'Q' untuk mengeluarkan Anggota")
                                 .build());
 
@@ -95,10 +96,12 @@ public class PartyGUI {
                                 .setLore(lore)
                                 .build(),
                         event -> {
-                            if (player.getUniqueId().equals(party.getLeader()) && !memberUUID.equals(party.getLeader())) {
-                                partyManager.kickPlayer(player, memberPlayer);
-                                player.closeInventory();
-                                open(player, page);
+                            if (event.getClick() == ClickType.DROP) {
+                                if (player.getUniqueId().equals(party.getLeader()) && !memberUUID.equals(party.getLeader())) {
+                                    player.closeInventory();
+                                    PartyKickConfirmationGUI partyKickConfirmationGUI =  new PartyKickConfirmationGUI(partyManager);
+                                    partyKickConfirmationGUI.openGUI(player, memberPlayer);
+                                }
                             }
                         }
                 ));
