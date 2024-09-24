@@ -1,3 +1,17 @@
+/*
+ * Copyright (C) 2024 Jose Marcellio
+ * GitHub: https://github.com/josemarcellio
+ *
+ * This software is open-source and distributed under the GNU General Public License (GPL), version 3.
+ * You are free to modify, share, and distribute it as long as the same freedoms are preserved.
+ *
+ * No warranties are provided with this software. It is distributed in the hope that it will be useful,
+ * but WITHOUT ANY IMPLIED WARRANTIES, including but not limited to the implied warranties of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
+ */
+
 package com.josemarcellio.joseplugin.party.gui;
 
 import com.josemarcellio.joseplugin.inventory.GUIItem;
@@ -17,6 +31,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,12 +78,21 @@ public class PartyGUI {
                                 "<aqua>" + memberPlayer.getName() + "</aqua>" + " " +"<yellow>(Member)</yellow>")
                         .build();
 
+                List<Component> lore = Arrays.asList(
+                        componentBuilder.singleComponentBuilder().text("").build(),
+                        componentBuilder.singleComponentBuilder()
+                                .addOperationIf(memberUUID.equals(party.getLeader()),
+                                        "<red>Kamu tidak dapat mengeluarkan dirimu sendiri",
+                                        "<green>Tombol 'Q' untuk mengeluarkan Anggota")
+                                .build());
+
 
                 guiBuilder.addItem(SLOT_INDEXES[i - startIndex], new GUIItem(
                         itemBuilderFactory.createSkullItemBuilder(
                                         "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Q2MDUzNGUyMmUzNzE0NzVkNTQzNGQwZjQ5YWUwNThkMzk0MWIwM2E3YzUwYTZlZWYyOTYyMGM2OTI3NzhlMCJ9fX0=",
                                         SkullType.BASE64)
                                 .setName(leader)
+                                .setLore(lore)
                                 .build(),
                         event -> {
                             if (player.getUniqueId().equals(party.getLeader()) && !memberUUID.equals(party.getLeader())) {

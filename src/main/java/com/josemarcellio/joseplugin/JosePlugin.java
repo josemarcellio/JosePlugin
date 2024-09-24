@@ -1,6 +1,19 @@
+/*
+ * Copyright (C) 2024 Jose Marcellio
+ * GitHub: https://github.com/josemarcellio
+ *
+ * This software is open-source and distributed under the GNU General Public License (GPL), version 3.
+ * You are free to modify, share, and distribute it as long as the same freedoms are preserved.
+ *
+ * No warranties are provided with this software. It is distributed in the hope that it will be useful,
+ * but WITHOUT ANY IMPLIED WARRANTIES, including but not limited to the implied warranties of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
+ */
+
 package com.josemarcellio.joseplugin;
 
-import com.josemarcellio.joseplugin.bstats.Metrics;
 import com.josemarcellio.joseplugin.job.data.JobsProgressionData;
 import com.josemarcellio.joseplugin.job.manager.JobsManager;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
@@ -12,6 +25,7 @@ import com.josemarcellio.joseplugin.server.module.ServerBrandChecker;
 import com.josemarcellio.joseplugin.server.module.VersionChecker;
 
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +47,7 @@ public class JosePlugin extends JavaPlugin {
     public void onEnable() {
         IChecker serverBrandChecker = new ServerBrandChecker();
         IChecker versionChecker = new VersionChecker();
-        this.dependencyManager = new DependencyManager();
+        dependencyManager = new DependencyManager();
 
         if (serverBrandChecker.isInvalid()) {
             getLogger().info("JosePlugin is only compatible with Paper or Paper Fork!");

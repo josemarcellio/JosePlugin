@@ -1,3 +1,17 @@
+/*
+ * Copyright (C) 2024 Jose Marcellio
+ * GitHub: https://github.com/josemarcellio
+ *
+ * This software is open-source and distributed under the GNU General Public License (GPL), version 3.
+ * You are free to modify, share, and distribute it as long as the same freedoms are preserved.
+ *
+ * No warranties are provided with this software. It is distributed in the hope that it will be useful,
+ * but WITHOUT ANY IMPLIED WARRANTIES, including but not limited to the implied warranties of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
+ */
+
 package com.josemarcellio.joseplugin.party.manager;
 
 import com.josemarcellio.joseplugin.component.ComponentBuilder;
@@ -120,7 +134,7 @@ public class PartyManager {
         UUID playerToInviteUUID = playerToInvite.getUniqueId();
         Party party = getPlayerParty(leader.getUniqueId());
         PartyInvite invite = getPendingInvite(playerToInvite.getUniqueId());
-        if (invite != null && invite.getParty().getLeader().equals(leader.getUniqueId()) && !isPlayerInParty(playerToInvite.getUniqueId())) {
+        if (invite != null && invite.party().getLeader().equals(leader.getUniqueId()) && !isPlayerInParty(playerToInvite.getUniqueId())) {
             if (party != null && !isPlayerInParty(playerToInviteUUID)) {
                 cancelPendingInvite(playerToInviteUUID);
                 party.addMember(playerToInvite);
@@ -145,7 +159,7 @@ public class PartyManager {
         if (pendingInvites.containsKey(playerUUID)) {
             PartyInvite invite = pendingInvites.get(playerUUID);
             if (invite != null) {
-                Player leader = Bukkit.getPlayer(invite.getParty().getLeader());
+                Player leader = Bukkit.getPlayer(invite.party().getLeader());
                 pendingInvites.remove(playerUUID);
 
                 player.sendMessage(componentBuilder.singleComponentBuilder().text("<aqua> 🎉 <color:#fae7b5>Party <color:#c4c3d0>• <white>Kamu telah menolak undangan party.").build());

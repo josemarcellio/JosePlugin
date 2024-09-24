@@ -1,5 +1,20 @@
+/*
+ * Copyright (C) 2024 Jose Marcellio
+ * GitHub: https://github.com/josemarcellio
+ *
+ * This software is open-source and distributed under the GNU General Public License (GPL), version 3.
+ * You are free to modify, share, and distribute it as long as the same freedoms are preserved.
+ *
+ * No warranties are provided with this software. It is distributed in the hope that it will be useful,
+ * but WITHOUT ANY IMPLIED WARRANTIES, including but not limited to the implied warranties of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
+ */
+
 package com.josemarcellio.joseplugin.playerwarp.manager;
 
+import com.josemarcellio.joseplugin.exception.JosePluginException;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -21,6 +36,7 @@ public class WarpManager {
         startAutoSaveTask();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void setupDatabase() {
         File dataFolder = plugin.getDataFolder();
         if (!dataFolder.exists()) {
@@ -32,7 +48,7 @@ public class WarpManager {
             plugin.getLogger().info("Successfully connected to SQLite database.");
         } catch (SQLException e) {
             plugin.getLogger().severe("Could not connect to SQLite database.");
-            e.printStackTrace();
+            throw new JosePluginException("Could not connect to SQLite database.", e);
         }
     }
 
@@ -56,7 +72,7 @@ public class WarpManager {
             statement.execute(createTableSQL);
         } catch (SQLException e) {
             plugin.getLogger().severe("Could not create table in SQLite database.");
-            e.printStackTrace();
+            throw new JosePluginException("Could not create table in SQLite database.", e);
         }
     }
 
@@ -85,7 +101,7 @@ public class WarpManager {
             }
         } catch (SQLException e) {
             plugin.getLogger().severe("Could not load warps from SQLite database.");
-            e.printStackTrace();
+            throw new JosePluginException("Could not load warps from SQLite database.", e);
         }
     }
 
@@ -113,7 +129,7 @@ public class WarpManager {
             statement.executeBatch();
         } catch (SQLException e) {
             plugin.getLogger().severe("Could not save warps to SQLite database.");
-            e.printStackTrace();
+            throw new JosePluginException("Could not save warps to SQLite database.", e);
         }
     }
 
@@ -129,7 +145,7 @@ public class WarpManager {
             statement.executeUpdate();
         } catch (SQLException e) {
             plugin.getLogger().severe("Could not delete warp from SQLite database.");
-            e.printStackTrace();
+            throw new JosePluginException("Could not delete warp from SQLite database.", e);
         }
     }
 

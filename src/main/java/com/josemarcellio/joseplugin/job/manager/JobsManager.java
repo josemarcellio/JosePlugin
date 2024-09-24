@@ -1,6 +1,21 @@
+/*
+ * Copyright (C) 2024 Jose Marcellio
+ * GitHub: https://github.com/josemarcellio
+ *
+ * This software is open-source and distributed under the GNU General Public License (GPL), version 3.
+ * You are free to modify, share, and distribute it as long as the same freedoms are preserved.
+ *
+ * No warranties are provided with this software. It is distributed in the hope that it will be useful,
+ * but WITHOUT ANY IMPLIED WARRANTIES, including but not limited to the implied warranties of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
+ */
+
 package com.josemarcellio.joseplugin.job.manager;
 
 import com.josemarcellio.joseplugin.JosePlugin;
+import com.josemarcellio.joseplugin.exception.JosePluginException;
 import com.josemarcellio.joseplugin.job.rewards.JobsLevelRewards;
 import com.josemarcellio.joseplugin.component.ComponentBuilder;
 import net.milkbowl.vault.economy.Economy;
@@ -16,7 +31,6 @@ public class JobsManager {
     private final JosePlugin plugin;
     private final Map<UUID, PlayerJobData> playerJobs = new HashMap<>();
     private Connection connection;
-    private final String[] validJobs = {"miner", "hunter", "farmer", "lumberjack"};
     private final Map<String, String> jobTextures = new HashMap<>();
     private final Map<String, String> jobDisplayNames = new HashMap<>();
     private final Map<String, Integer> jobWorkerCount = new HashMap<>();
@@ -58,15 +72,6 @@ public class JobsManager {
         return jobDisplayNames.getOrDefault(job, "None");
     }
 
-    public boolean isValidJob(String job) {
-        for (String validJob : validJobs) {
-            if (validJob.equalsIgnoreCase(job)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void startAutoSaveTask() {
         new BukkitRunnable() {
             @Override
@@ -86,6 +91,7 @@ public class JobsManager {
         dirtyPlayers.clear();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void setupDatabase() {
         File dataFolder = plugin.getDataFolder();
         if (!dataFolder.exists()) {
@@ -99,7 +105,7 @@ public class JobsManager {
             }
             loadJobsFromDatabase();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new JosePluginException("Failed to setup database", e);
         }
     }
 
@@ -116,7 +122,7 @@ public class JobsManager {
                 jobWorkerCount.put(job, jobWorkerCount.getOrDefault(job, 0) + 1);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new JosePluginException("Failed to load jobs from database", e);
         }
     }
 
@@ -137,17 +143,16 @@ public class JobsManager {
     }
 
 
-    public boolean leaveJob(UUID playerUUID) {
+    public void leaveJob(UUID playerUUID) {
         PlayerJobData data = playerJobs.get(playerUUID);
         if (data == null) {
-            return false;
+            return;
         }
 
         String job = data.getJob();
         playerJobs.remove(playerUUID);
         jobWorkerCount.put(job, jobWorkerCount.getOrDefault(job, 1) - 1);
         removeJobFromDatabase(playerUUID);
-        return true;
     }
 
     public int getTotalWorkers(String job) {
@@ -196,7 +201,7 @@ public class JobsManager {
             ps.setDouble(4, exp);
             ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new JosePluginException("Failed to save job to database", e);
         }
     }
 
@@ -205,7 +210,7 @@ public class JobsManager {
             ps.setString(1, playerUUID.toString());
             ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new JosePluginException("Failed to remove job from database", e);
         }
     }
 
@@ -216,7 +221,7 @@ public class JobsManager {
                 connection.close();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new JosePluginException("Failed to close database", e);
         }
     }
 

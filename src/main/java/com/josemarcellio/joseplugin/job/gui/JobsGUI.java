@@ -1,3 +1,17 @@
+/*
+ * Copyright (C) 2024 Jose Marcellio
+ * GitHub: https://github.com/josemarcellio
+ *
+ * This software is open-source and distributed under the GNU General Public License (GPL), version 3.
+ * You are free to modify, share, and distribute it as long as the same freedoms are preserved.
+ *
+ * No warranties are provided with this software. It is distributed in the hope that it will be useful,
+ * but WITHOUT ANY IMPLIED WARRANTIES, including but not limited to the implied warranties of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
+ */
+
 package com.josemarcellio.joseplugin.job.gui;
 
 import com.josemarcellio.joseplugin.JosePlugin;
@@ -68,13 +82,17 @@ public class JobsGUI {
         .setName(componentBuilder.singleComponentBuilder().text(jobsManager.getDisplayName(job)).build())
         .setLore(lore).build(),event -> {
             if (event.getClick().isLeftClick()) {
-                if (jobsManager.joinJob(player.getUniqueId(), job)) {
-                    event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Kamu berhasil bergabung dengan job " + displayName).build());
-                    event.getWhoClicked().closeInventory();
-                    openGUI(player);
+                if (jobsManager.isJobFull(job)) {
+                    event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Mohon maaf, job " + displayName + " <white>telah melebihi batas maksimal worker!, silahkan bergabung dengan job lain yang tersedia").build());
                 } else {
-                    if (!jobsManager.getJob(event.getWhoClicked().getUniqueId()).equals(job)) {
-                        event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Gagal bergabung dengan job " + displayName + " <white>silahkan keluar dari job " + jobsManager.getDisplayName(jobsManager.getJob(event.getWhoClicked().getUniqueId())) + " <white>terlebih dahulu!").build());
+                    if (jobsManager.joinJob(player.getUniqueId(), job)) {
+                        event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Kamu berhasil bergabung dengan job " + displayName).build());
+                        event.getWhoClicked().closeInventory();
+                        openGUI(player);
+                    } else {
+                        if (!jobsManager.getJob(event.getWhoClicked().getUniqueId()).equals(job)) {
+                            event.getWhoClicked().sendMessage(componentBuilder.singleComponentBuilder().text("<yellow> ✪ <color:#fae7b5>Jobs <color:#c4c3d0>• <white>Gagal bergabung dengan job " + displayName + " <white>silahkan keluar dari job " + jobsManager.getDisplayName(jobsManager.getJob(event.getWhoClicked().getUniqueId())) + " <white>terlebih dahulu!").build());
+                        }
                     }
                 }
             } else if (event.getClick() == ClickType.DROP) {
