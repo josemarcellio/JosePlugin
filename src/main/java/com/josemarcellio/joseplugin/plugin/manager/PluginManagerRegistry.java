@@ -35,8 +35,9 @@ import com.josemarcellio.joseplugin.party.command.PartyCommand;
 import com.josemarcellio.joseplugin.party.manager.PartyManager;
 import com.josemarcellio.joseplugin.playerwarp.command.WarpCommand;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
+import com.josemarcellio.joseplugin.playtime.command.PlaytimeCommand;
 
-public class PluginManagerRegistery implements PluginManager {
+public class PluginManagerRegistry implements PluginManager {
 
     private final PluginListenerManager listenerManager;
     private final PluginCommandManager commandManager;
@@ -45,7 +46,7 @@ public class PluginManagerRegistery implements PluginManager {
     private final JosePlugin plugin;
     private final ICooldownManager cooldownManager = new CooldownManager();
 
-    public PluginManagerRegistery(JosePlugin plugin) {
+    public PluginManagerRegistry(JosePlugin plugin) {
         this.plugin = plugin;
         this.listenerManager = new PluginListenerManager(plugin);
         this.commandManager = new PluginCommandManager(plugin);
@@ -76,5 +77,6 @@ public class PluginManagerRegistery implements PluginManager {
         commandManager.registerCommand("playerwarp", new WarpCommand(plugin, warpManager));
         commandManager.registerCommand("job", new JobsCommand(plugin));
         commandManager.registerCommand("troll", new TrollCommand(cooldownManager));
+        commandManager.registerCommand("playtime", new PlaytimeCommand());
     }
 }

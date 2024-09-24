@@ -27,3 +27,5 @@ commands:
   troll:
     aliases:
       - trolls
+  playtime:
+    aliases: []

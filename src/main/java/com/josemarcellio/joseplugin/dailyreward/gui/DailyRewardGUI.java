@@ -128,10 +128,10 @@ public class DailyRewardGUI {
     private String getCooldownTimeFormatted(Player player) {
         Instant expiryTime = getLuckPermsExpiry(player.getName());
         return new TimeFormatter()
-                .setDayString("days")
-                .setHourString("hours")
-                .setMinuteString("minutes")
-                .setSecondString("seconds")
+                .setDayString("hari")
+                .setHourString("jam")
+                .setMinuteString("menit")
+                .setSecondString("detik")
                 .formattedTime(expiryTime);
     }
 

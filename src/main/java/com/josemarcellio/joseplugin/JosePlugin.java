@@ -19,7 +19,7 @@ import com.josemarcellio.joseplugin.job.manager.JobsManager;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
 import com.josemarcellio.joseplugin.plugin.loader.manager.DependencyManager;
 import com.josemarcellio.joseplugin.plugin.loader.manager.IDependencyManager;
-import com.josemarcellio.joseplugin.plugin.manager.PluginManagerRegistery;
+import com.josemarcellio.joseplugin.plugin.manager.PluginManagerRegistry;
 import com.josemarcellio.joseplugin.server.IChecker;
 import com.josemarcellio.joseplugin.server.module.ServerBrandChecker;
 import com.josemarcellio.joseplugin.server.module.VersionChecker;
@@ -37,7 +37,7 @@ public class JosePlugin extends JavaPlugin {
 
     private final List<Plugin> loadedPlugins = new ArrayList<>();
     private IDependencyManager dependencyManager;
-    private PluginManagerRegistery pluginManagerRegistery;
+    private PluginManagerRegistry pluginManagerRegistry;
     private WarpManager warpManager;
     public Economy econ = null;
     public JobsManager jobsManager;
@@ -74,9 +74,9 @@ public class JosePlugin extends JavaPlugin {
 
             warpManager = new WarpManager(this);
 
-            pluginManagerRegistery = new PluginManagerRegistery(this);
-            pluginManagerRegistery.registerListeners();
-            pluginManagerRegistery.registerCommands();
+            pluginManagerRegistry = new PluginManagerRegistry(this);
+            pluginManagerRegistry.registerListeners();
+            pluginManagerRegistry.registerCommands();
         }
     }
 
@@ -84,7 +84,7 @@ public class JosePlugin extends JavaPlugin {
     public void onDisable() {
         warpManager.saveWarps();
         jobsManager.closeDatabase();
-        pluginManagerRegistery = null;
+        pluginManagerRegistry = null;
         dependencyManager.disableDependencies(loadedPlugins, getServer());
         getLogger().info("JosePlugin plugin disabled.");
     }
