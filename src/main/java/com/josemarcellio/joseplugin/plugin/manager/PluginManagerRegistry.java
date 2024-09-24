@@ -34,19 +34,18 @@ import com.josemarcellio.joseplugin.party.PartyListener;
 import com.josemarcellio.joseplugin.party.command.PartyCommand;
 import com.josemarcellio.joseplugin.party.manager.PartyManager;
 import com.josemarcellio.joseplugin.playerwarp.command.WarpCommand;
-import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
+
 import com.josemarcellio.joseplugin.playtime.command.PlaytimeCommand;
 
 import com.josemarcellio.joseplugin.silent.command.SilentKickCommand;
 import com.josemarcellio.joseplugin.silent.manager.SilentManager;
-import com.josemarcellio.joseplugin.silent.packet.SilentListener;
+import com.josemarcellio.joseplugin.silent.SilentListener;
 
 public class PluginManagerRegistry implements PluginManager {
 
     private final JosePlugin plugin;
     private final PluginListenerManager listenerManager;
     private final PluginCommandManager commandManager;
-    private final WarpManager warpManager;
     private final PartyManager partyManager = new PartyManager();
     private final ICooldownManager cooldownManager = new CooldownManager();
     private final SilentManager silentManager = new SilentManager();
@@ -55,7 +54,6 @@ public class PluginManagerRegistry implements PluginManager {
         this.plugin = plugin;
         this.listenerManager = new PluginListenerManager(plugin);
         this.commandManager = new PluginCommandManager(plugin);
-        this.warpManager = new WarpManager(plugin);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class PluginManagerRegistry implements PluginManager {
     public void registerCommands() {
         commandManager.registerCommand("dailyreward", new DailyRewardCommand(plugin));
         commandManager.registerCommand("party", new PartyCommand(partyManager));
-        commandManager.registerCommand("playerwarp", new WarpCommand(plugin, warpManager));
+        commandManager.registerCommand("playerwarp", new WarpCommand(plugin));
         commandManager.registerCommand("job", new JobsCommand(plugin));
         commandManager.registerCommand("troll", new TrollCommand(cooldownManager));
         commandManager.registerCommand("playtime", new PlaytimeCommand());

@@ -8,13 +8,11 @@ version '1.0.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    flatDir {
-        dirs 'libs'
-    }
     maven { url 'https://repo.papermc.io/repository/maven-public/' }
     maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.codemc.io/repository/maven-releases/' }
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 }
 
 dependencies {
@@ -23,10 +21,13 @@ dependencies {
     compileOnly 'net.luckperms:api:5.4'
     compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
     compileOnly 'com.github.retrooper:packetevents-spigot:2.5.0'
-    implementation 'org.bstats:bstats-bukkit:3.0.2'
-    fileTree(dir: 'libs', include: '*.jar').each { file ->
-        compileOnly files(file)
+    compileOnly ('io.github.fabiozumbi12.RedProtect:RedProtect-Spigot:8.1.2') {
+        exclude group: '*'
     }
+    compileOnly ('io.github.fabiozumbi12.RedProtect:RedProtect-Core:8.1.2') {
+        exclude group: '*'
+    }
+    implementation 'org.bstats:bstats-bukkit:3.0.2'
 }
 
 tasks.withType(JavaCompile).configureEach {

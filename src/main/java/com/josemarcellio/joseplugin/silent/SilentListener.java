@@ -12,7 +12,7 @@
  * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
  */
 
-package com.josemarcellio.joseplugin.silent.packet;
+package com.josemarcellio.joseplugin.silent;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
@@ -20,6 +20,7 @@ import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import com.josemarcellio.joseplugin.JosePlugin;
 import com.josemarcellio.joseplugin.silent.manager.SilentManager;
 
+import com.josemarcellio.joseplugin.silent.packet.PacketSendReceive;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

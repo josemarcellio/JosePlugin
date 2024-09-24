@@ -44,13 +44,11 @@ import java.util.Map;
 
 public class WarpCommand implements CommandExecutor {
     private final JosePlugin plugin;
-    private final WarpManager warpManager;
     private final ComponentBuilder componentBuilder = new ComponentBuilder();
     private final Blacklist blacklist = new Blacklist();
 
-    public WarpCommand(JosePlugin plugin, WarpManager warpManager) {
+    public WarpCommand(JosePlugin plugin) {
         this.plugin = plugin;
-        this.warpManager = warpManager;
     }
 
     @Override
@@ -359,7 +357,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         String name = args[1].toLowerCase();
-        Warp warp = warpManager.getWarp(name);
+        Warp warp = plugin.getWarpManager().getWarp(name);
 
         if (warp == null) {
             player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Nama dengan nama <aqua>" + name + " tidak ditemukan!").build());
@@ -405,7 +403,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         String name = args[1];
-        Warp warp = warpManager.getWarp(name);
+        Warp warp = plugin.getWarpManager().getWarp(name);
 
         if (warp == null) {
             player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Warp dengan nama <aqua>" + name + " tidak ditemukan!").build());
@@ -417,7 +415,7 @@ public class WarpCommand implements CommandExecutor {
             return false;
         }
 
-        warpManager.deleteWarp(name);
+        plugin.getWarpManager().deleteWarp(name);
         player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Berhasil menghapus warp <aqua>" + name).build());
         return true;
     }
