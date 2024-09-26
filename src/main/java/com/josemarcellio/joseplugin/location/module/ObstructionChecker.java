@@ -22,13 +22,23 @@ import org.bukkit.entity.Player;
 public class ObstructionChecker implements LocationChecker {
 
     @Override
-    public boolean isSafe(Location location, Player player) {
+    public boolean isNotSafe(Location location, Player player) {
         World world = location.getWorld();
         if (world == null) {
-            return false;
+            return true;
+        }
+
+        if (!world.getBlockAt(location).isPassable()) {
+            return true;
         }
 
         Location headLocation = location.clone().add(0, 1, 0);
-        return world.getBlockAt(location).isPassable() && world.getBlockAt(headLocation).isPassable();
+
+        return !world.getBlockAt(location).isPassable() || !world.getBlockAt(headLocation).isPassable();
+    }
+
+    @Override
+    public String getMessage() {
+        return "Lokasi ini tidak aman karena terdapat block penghalang disini!";
     }
 }

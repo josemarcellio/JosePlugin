@@ -16,6 +16,7 @@ package com.josemarcellio.joseplugin.blacklist;
 
 import com.josemarcellio.joseplugin.blacklist.module.ItemBlacklist;
 import com.josemarcellio.joseplugin.blacklist.module.WorldBlacklist;
+import com.josemarcellio.joseplugin.blacklist.type.BlacklistType;
 import org.bukkit.entity.Player;
 
 public class Blacklist {
@@ -23,11 +24,10 @@ public class Blacklist {
     private final WorldBlacklist worldBlacklist = new WorldBlacklist();
     private final ItemBlacklist itemBlacklist = new ItemBlacklist();
 
-    public boolean isBlacklistWorld(Player player) {
-        return worldBlacklist.isBlacklisted(player);
-    }
-
-    public boolean isBlacklistItem(String material) {
-        return itemBlacklist.isBlacklisted(material);
+    public boolean isBlacklisted(BlacklistType type, Object object) {
+        return switch (type) {
+            case ITEM -> object instanceof String && itemBlacklist.isBlacklisted((String) object);
+            case WORLD -> object instanceof Player && worldBlacklist.isBlacklisted((Player) object);
+        };
     }
 }

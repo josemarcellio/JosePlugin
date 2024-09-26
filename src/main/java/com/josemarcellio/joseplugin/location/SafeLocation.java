@@ -29,12 +29,21 @@ public class SafeLocation {
         return this;
     }
 
-    public boolean isSafeLocation(Player player, Location location) {
+    public boolean isNotsafe(Player player, Location location) {
         for (LocationChecker checker : checkers) {
-            if (!checker.isSafe(location, player)) {
-                return false;
+            if (checker.isNotSafe(location, player)) {
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    public String getMessage(Player player, Location location) {
+        for (LocationChecker checker : checkers) {
+            if (checker.isNotSafe(location, player)) {
+                return checker.getMessage();
+            }
+        }
+        return null;
     }
 }

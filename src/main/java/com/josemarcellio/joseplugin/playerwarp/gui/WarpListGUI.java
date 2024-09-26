@@ -26,7 +26,6 @@ import com.josemarcellio.joseplugin.location.module.GroundChecker;
 import com.josemarcellio.joseplugin.location.module.HazardChecker;
 import com.josemarcellio.joseplugin.location.module.ObstructionChecker;
 import com.josemarcellio.joseplugin.location.module.VoidChecker;
-import com.josemarcellio.joseplugin.location.module.hook.RedProtectChecker;
 import com.josemarcellio.joseplugin.playerwarp.manager.Warp;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
 import com.josemarcellio.joseplugin.skull.type.SkullType;
@@ -133,11 +132,12 @@ public class WarpListGUI {
                 .addCheck(new GroundChecker())
                 .addCheck(new HazardChecker())
                 .addCheck(new ObstructionChecker())
-                .addCheck(new VoidChecker())
-                .addCheck(new RedProtectChecker());
+                .addCheck(new VoidChecker());
 
-        if (!safeLocation.isSafeLocation(player, location)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa teleport ke warp <aqua>" + warpName + ", <white>karena tempat ini tidak aman!").build());
+        String locationMessage = safeLocation.getMessage(player, location);
+
+        if (safeLocation.isNotsafe(player, location)) {
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa teleport ke warp <aqua>" + warpName + ", <white>" + locationMessage).build());
             return;
         }
 

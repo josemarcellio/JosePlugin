@@ -25,19 +25,27 @@ import org.bukkit.entity.Player;
 public class RedProtectChecker implements LocationChecker {
 
     @Override
-    public boolean isSafe(Location location, Player player) {
+    public boolean isNotSafe(Location location, Player player) {
         PluginStateChecker pluginLoaded = new PluginStateChecker();
-        if (pluginLoaded.isPluginLoaded("RedProtect")) {
-            World world = location.getWorld();
-            if (world == null) {
-                return false;
-            }
-
-            Region region = RedProtect.get().getAPI().getRegion(player.getLocation());
-            if (region != null) {
-                return region.canBuild(player);
-            }
+        if (!pluginLoaded.isPluginLoaded("RedProtect")) {
+            return false;
         }
-        return true;
+
+        World world = location.getWorld();
+        if (world == null) {
+            return true;
+        }
+
+        Region region = RedProtect.get().getAPI().getRegion(player.getLocation());
+        if (region != null) {
+            return !region.canBuild(player);
+        }
+
+        return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return "Lokasi ini di proteksi karena berada di dalam RedProtect!";
     }
 }

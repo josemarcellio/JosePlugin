@@ -16,6 +16,7 @@ package com.josemarcellio.joseplugin.playerwarp.command;
 
 import com.josemarcellio.joseplugin.JosePlugin;
 import com.josemarcellio.joseplugin.blacklist.Blacklist;
+import com.josemarcellio.joseplugin.blacklist.type.BlacklistType;
 import com.josemarcellio.joseplugin.location.SafeLocation;
 import com.josemarcellio.joseplugin.location.module.GroundChecker;
 import com.josemarcellio.joseplugin.location.module.HazardChecker;
@@ -118,7 +119,7 @@ public class WarpCommand implements CommandExecutor {
             return false;
         }
 
-        if (blacklist.isBlacklistWorld(player)) {
+        if (blacklist.isBlacklisted(BlacklistType.WORLD, player)) {
             player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa membuat warp di tempat ini, karena world <aqua>" + player.getWorld().getName() + " <white>diblacklist!").build());
             return false;
         }
@@ -131,8 +132,10 @@ public class WarpCommand implements CommandExecutor {
                 .addCheck(new VoidChecker())
                 .addCheck(new RedProtectChecker());
 
-        if (!safeLocation.isSafeLocation(player, player.getLocation())) {
-            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa membuat warp di tempat ini karena tempat ini tidak aman!").build());
+        String locationMessage = safeLocation.getMessage(player, player.getLocation());
+
+        if (safeLocation.isNotsafe(player, player.getLocation())) {
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>" + locationMessage).build());
             return false;
         }
 
@@ -207,8 +210,8 @@ public class WarpCommand implements CommandExecutor {
             return false;
         }
 
-        if (blacklist.isBlacklistItem(material)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Material <aqua>" + material + " tidak dapat digunakan sebagai icon!").build());
+        if (blacklist.isBlacklisted(BlacklistType.ITEM, material)) {
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Material <aqua>" + material + " <white>tidak dapat digunakan sebagai icon!").build());
             return false;
         }
 
@@ -264,7 +267,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
 
-        if (blacklist.isBlacklistWorld(player)) {
+        if (blacklist.isBlacklisted(BlacklistType.WORLD, player)) {
             player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa set location di tempat ini, karena world <aqua>" + player.getWorld().getName() + " <white>diblacklist!").build());
             return false;
         }
@@ -276,8 +279,10 @@ public class WarpCommand implements CommandExecutor {
                 .addCheck(new VoidChecker())
                 .addCheck(new RedProtectChecker());
 
-        if (!safeLocation.isSafeLocation(player, player.getLocation())) {
-            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa set location disini karena tempat ini tidak aman!").build());
+        String locationMessage = safeLocation.getMessage(player, player.getLocation());
+
+        if (safeLocation.isNotsafe(player, player.getLocation())) {
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>" + locationMessage).build());
             return false;
         }
 
@@ -377,11 +382,12 @@ public class WarpCommand implements CommandExecutor {
                 .addCheck(new GroundChecker())
                 .addCheck(new HazardChecker())
                 .addCheck(new ObstructionChecker())
-                .addCheck(new VoidChecker())
-                .addCheck(new RedProtectChecker());
+                .addCheck(new VoidChecker());
 
-        if (!safeLocation.isSafeLocation(player, location)) {
-            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa teleport ke warp <aqua>" + name + ", <white>karena tempat ini tidak aman!").build());
+        String locationMessage = safeLocation.getMessage(player, location);
+
+        if (safeLocation.isNotsafe(player, location)) {
+            player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Tidak bisa teleport ke warp <aqua>" + name + ", <white>" + locationMessage).build());
             return false;
         }
 

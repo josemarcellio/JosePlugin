@@ -24,10 +24,10 @@ import org.bukkit.entity.Player;
 public class HazardChecker implements LocationChecker {
 
     @Override
-    public boolean isSafe(Location location, Player player) {
+    public boolean isNotSafe(Location location, Player player) {
         World world = location.getWorld();
         if (world == null) {
-            return false;
+            return true;
         }
 
         for (int x = -1; x <= 1; x++) {
@@ -36,11 +36,16 @@ public class HazardChecker implements LocationChecker {
                     Location checkLocation = location.clone().add(x, y, z);
                     Block block = world.getBlockAt(checkLocation);
                     if (block.getType() == Material.LAVA || block.getType() == Material.MAGMA_BLOCK) {
-                        return false;
+                        return true;
                     }
                 }
             }
         }
-        return true;
+        return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return "Lokasi ini tidak aman karena dekat dengan lava atau block yang panas!";
     }
 }

@@ -24,14 +24,19 @@ import org.bukkit.entity.Player;
 public class GroundChecker implements LocationChecker {
 
     @Override
-    public boolean isSafe(Location location, Player player) {
+    public boolean isNotSafe(Location location, Player player) {
         World world = location.getWorld();
         if (world == null) {
-            return false;
+            return true;
         }
 
         Location groundLocation = location.clone().subtract(0, 1, 0);
         Block groundBlock = world.getBlockAt(groundLocation);
-        return groundBlock.getType() != Material.AIR;
+        return groundBlock.getType() == Material.AIR;
+    }
+
+    @Override
+    public String getMessage() {
+        return "Lokasi ini tidak aman karena tidak ditemukan block yang solid!";
     }
 }

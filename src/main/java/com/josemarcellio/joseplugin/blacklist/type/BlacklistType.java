@@ -12,21 +12,9 @@
  * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
  */
 
-package com.josemarcellio.joseplugin.location.module;
+package com.josemarcellio.joseplugin.blacklist.type;
 
-import com.josemarcellio.joseplugin.location.LocationChecker;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
-public class VoidChecker implements LocationChecker {
-
-    @Override
-    public boolean isNotSafe(Location location, Player player) {
-        return location.getY() <= 0;
-    }
-
-    @Override
-    public String getMessage() {
-        return "Lokasi ini tidak aman karena berada di void!";
-    }
+public enum BlacklistType {
+    WORLD,
+    ITEM
 }
