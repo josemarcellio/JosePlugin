@@ -100,8 +100,8 @@ public class LumberjackListener extends BaseJobsHandler implements Listener {
             return;
         }
 
-        if (plugin.getJobProgressionData().getMinerBlockExpMap().containsKey(brokenBlock)) {
-            double exp = plugin.getJobProgressionData().getMinerBlockExpMap().get(brokenBlock);
+        if (plugin.getJobProgressionData().getLumberjackBlockExpMap().containsKey(brokenBlock)) {
+            double exp = plugin.getJobProgressionData().getLumberjackBlockExpMap().get(brokenBlock);
             handleSharedExp(player, exp);
 
             Component format = componentBuilder.singleComponentBuilder().text("<gray>Level: <aqua>" + plugin.getJobsManager().getLevel(player.getUniqueId()) + " <gray>(<aqua>" + plugin.getJobsManager().getExp(player.getUniqueId()) +  "<dark_gray>/<aqua>" + (plugin.getJobsManager().getLevel(player.getUniqueId()) * 100) + "<gray>)" + " (<light_purple>" + brokenBlock + "<gray>)").build();

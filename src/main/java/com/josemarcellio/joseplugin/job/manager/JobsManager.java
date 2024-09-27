@@ -18,9 +18,9 @@ import com.josemarcellio.joseplugin.JosePlugin;
 import com.josemarcellio.joseplugin.exception.JosePluginException;
 import com.josemarcellio.joseplugin.job.rewards.JobsLevelRewards;
 import com.josemarcellio.joseplugin.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.job.runnable.JobsTask;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.sql.*;
@@ -38,7 +38,6 @@ public class JobsManager {
     private final JobsLevelRewards rewardsManager;
     private final Set<UUID> dirtyPlayers = new HashSet<>();
     private final ComponentBuilder componentBuilder = new ComponentBuilder();
-
 
     public JobsManager(JosePlugin plugin, Economy econ) {
         this.plugin = plugin;
@@ -73,12 +72,7 @@ public class JobsManager {
     }
 
     private void startAutoSaveTask() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                saveAllDirtyPlayers();
-            }
-        }.runTaskTimerAsynchronously(plugin, 0L, 6000L);
+        new JobsTask(this).runTaskTimerAsynchronously(plugin, 0L, 6000L);
     }
 
     public void saveAllDirtyPlayers() {
@@ -86,6 +80,8 @@ public class JobsManager {
             PlayerJobData data = playerJobs.get(playerUUID);
             if (data != null) {
                 saveJobToDatabase(playerUUID, data.getJob(), data.getLevel(), data.getExp());
+            } else {
+                deleteJobFromDatabase(playerUUID);
             }
         }
         dirtyPlayers.clear();
@@ -138,7 +134,7 @@ public class JobsManager {
 
         playerJobs.put(playerUUID, new PlayerJobData(plugin, job, 1, 0));
         jobWorkerCount.put(job, jobWorkerCount.getOrDefault(job, 0) + 1);
-        saveJobToDatabase(playerUUID, job, 1, 0);
+        dirtyPlayers.add(playerUUID);
         return true;
     }
 
@@ -152,7 +148,7 @@ public class JobsManager {
         String job = data.getJob();
         playerJobs.remove(playerUUID);
         jobWorkerCount.put(job, jobWorkerCount.getOrDefault(job, 1) - 1);
-        removeJobFromDatabase(playerUUID);
+        dirtyPlayers.add(playerUUID);
     }
 
     public int getTotalWorkers(String job) {
@@ -205,12 +201,12 @@ public class JobsManager {
         }
     }
 
-    private void removeJobFromDatabase(UUID playerUUID) {
+    private void deleteJobFromDatabase(UUID playerUUID) {
         try (PreparedStatement ps = connection.prepareStatement("DELETE FROM player_jobs WHERE uuid = ?")) {
             ps.setString(1, playerUUID.toString());
             ps.executeUpdate();
         } catch (Exception e) {
-            throw new JosePluginException("Failed to remove job from database", e);
+            throw new JosePluginException("Failed to delete job from database", e);
         }
     }
 

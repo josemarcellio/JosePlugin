@@ -48,7 +48,7 @@ public class JobsProgressionGUI {
     }
 
     public void openGUI(Player player, String jobs) {
-        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder().text("<aqua>Jobs Progression</aqua>").build(), 54); // 6 rows * 9 slots = 54
+        GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder().text("<aqua>Jobs Progression</aqua>").build(), 54);
 
         addProgressionItems(builder, jobs);
 

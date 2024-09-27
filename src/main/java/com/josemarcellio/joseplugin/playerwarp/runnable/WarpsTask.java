@@ -12,9 +12,21 @@
  * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
  */
 
-package com.josemarcellio.joseplugin.server;
+package com.josemarcellio.joseplugin.playerwarp.runnable;
 
-@FunctionalInterface
-public interface IChecker {
-    boolean isInvalid();
+import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
+import org.bukkit.scheduler.BukkitRunnable;
+
+public class WarpsTask extends BukkitRunnable {
+
+    private final WarpManager warpManager;
+
+    public WarpsTask(WarpManager warpManager) {
+        this.warpManager = warpManager;
+    }
+
+    @Override
+    public void run() {
+        warpManager.saveAllDirtyPlayers();
+    }
 }

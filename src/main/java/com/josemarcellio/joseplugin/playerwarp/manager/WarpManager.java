@@ -15,17 +15,17 @@
 package com.josemarcellio.joseplugin.playerwarp.manager;
 
 import com.josemarcellio.joseplugin.exception.JosePluginException;
+import com.josemarcellio.joseplugin.playerwarp.runnable.WarpsTask;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class WarpManager {
     private final JavaPlugin plugin;
     private final Map<String, Warp> warps = new HashMap<>();
+    private final Set<UUID> dirtyPlayers = new HashSet<>();
     private Connection connection;
 
     public WarpManager(JavaPlugin plugin) {
@@ -52,6 +52,25 @@ public class WarpManager {
         }
     }
 
+    public void startAutoSaveTask() {
+        new WarpsTask(this).runTaskTimerAsynchronously(plugin, 0L, 6000L);
+    }
+
+    public void saveAllDirtyPlayers() {
+        for (UUID playerUUID : dirtyPlayers) {
+            Set<String> playerWarps = new HashSet<>();
+
+            warps.entrySet().stream()
+                    .filter(entry -> entry.getValue().getOwnerUUID().equals(playerUUID.toString()))
+                    .forEach(entry -> {
+                        playerWarps.add(entry.getKey());
+                        saveWarp(entry.getKey());
+                    });
+
+            deleteWarpFromDatabase(playerUUID, playerWarps);
+        }
+        dirtyPlayers.clear();
+    }
 
     private void createTableIfNotExists() {
         String createTableSQL = "CREATE TABLE IF NOT EXISTS warps (" +
@@ -105,44 +124,62 @@ public class WarpManager {
         }
     }
 
-    public void saveWarps() {
+    public void saveWarp(String name) {
+        Warp warp = warps.get(name);
+        if (warp == null) return;
+
         String insertOrUpdateSQL = "INSERT OR REPLACE INTO warps (name, world, x, y, z, yaw, pitch, owner, ownerUUID, description, visitor, material, textures) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (PreparedStatement statement = connection.prepareStatement(insertOrUpdateSQL)) {
-            for (Map.Entry<String, Warp> entry : warps.entrySet()) {
-                Warp warp = entry.getValue();
-                statement.setString(1, entry.getKey());
-                statement.setString(2, warp.getWorld());
-                statement.setDouble(3, warp.getX());
-                statement.setDouble(4, warp.getY());
-                statement.setDouble(5, warp.getZ());
-                statement.setFloat(6, warp.getYaw());
-                statement.setFloat(7, warp.getPitch());
-                statement.setString(8, warp.getOwner());
-                statement.setString(9, warp.getOwnerUUID());
-                statement.setString(10, warp.getDescription());
-                statement.setInt(11, warp.getVisitor());
-                statement.setString(12, warp.getMaterial().name());
-                statement.setString(13, warp.getTextures());
-                statement.addBatch();
-            }
-            statement.executeBatch();
+            statement.setString(1, name);
+            statement.setString(2, warp.getWorld());
+            statement.setDouble(3, warp.getX());
+            statement.setDouble(4, warp.getY());
+            statement.setDouble(5, warp.getZ());
+            statement.setFloat(6, warp.getYaw());
+            statement.setFloat(7, warp.getPitch());
+            statement.setString(8, warp.getOwner());
+            statement.setString(9, warp.getOwnerUUID());
+            statement.setString(10, warp.getDescription());
+            statement.setInt(11, warp.getVisitor());
+            statement.setString(12, warp.getMaterial().name());
+            statement.setString(13, warp.getTextures());
+            statement.executeUpdate();
         } catch (SQLException e) {
-            plugin.getLogger().severe("Could not save warps to SQLite database.");
-            throw new JosePluginException("Could not save warps to SQLite database.", e);
+            plugin.getLogger().severe("Could not save warp to SQLite database.");
+            throw new JosePluginException("Could not save warp to SQLite database.", e);
         }
     }
 
     public void addWarp(String name, Warp warp) {
         warps.put(name, warp);
+        dirtyPlayers.add(UUID.fromString(warp.getOwnerUUID()));
     }
 
     public void deleteWarp(String name) {
-        warps.remove(name);
-        String deleteSQL = "DELETE FROM warps WHERE name = ?";
-        try (PreparedStatement statement = connection.prepareStatement(deleteSQL)) {
-            statement.setString(1, name);
-            statement.executeUpdate();
+        Warp removedWarp = warps.remove(name);
+        if (removedWarp != null) {
+            dirtyPlayers.add(UUID.fromString(removedWarp.getOwnerUUID()));
+        }
+    }
+
+    private void deleteWarpFromDatabase(UUID playerUUID, Set<String> playerWarps) {
+        String query = "SELECT name FROM warps WHERE ownerUUID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, playerUUID.toString());
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String warpName = resultSet.getString("name");
+                if (!playerWarps.contains(warpName)) {
+                    String deleteSQL = "DELETE FROM warps WHERE name = ?";
+                    try (PreparedStatement deleteStatement = connection.prepareStatement(deleteSQL)) {
+                        deleteStatement.setString(1, warpName);
+                        deleteStatement.executeUpdate();
+                    }
+                }
+            }
         } catch (SQLException e) {
             plugin.getLogger().severe("Could not delete warp from SQLite database.");
             throw new JosePluginException("Could not delete warp from SQLite database.", e);
@@ -157,12 +194,14 @@ public class WarpManager {
         return warps.get(name);
     }
 
-    public void startAutoSaveTask() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                saveWarps();
+    public void closeDatabase() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                saveAllDirtyPlayers();
+                connection.close();
             }
-        }.runTaskTimerAsynchronously(plugin, 0L, 6000L);
+        } catch (Exception e) {
+            throw new JosePluginException("Failed to close database", e);
+        }
     }
 }

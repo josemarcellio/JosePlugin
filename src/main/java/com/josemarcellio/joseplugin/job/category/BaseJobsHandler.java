@@ -61,7 +61,7 @@ public abstract class BaseJobsHandler {
         Party party = getPlayerParty().getPlayerParty(player.getUniqueId());
         if (party != null) {
             Collection<UUID> memberUUIDs = party.getMembers();
-            int memberCount = memberUUIDs.size();
+            int memberCount = Math.min(memberUUIDs.size(), 4);
             for (UUID memberUUID : memberUUIDs) {
                 Player member = Bukkit.getPlayer(memberUUID);
                 if (member != null && member.isOnline() && getPlugin().getJobsManager().getLevel(memberUUID) > 0) {

@@ -12,9 +12,21 @@
  * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
  */
 
-package com.josemarcellio.joseplugin.server;
+package com.josemarcellio.joseplugin.job.runnable;
 
-@FunctionalInterface
-public interface IChecker {
-    boolean isInvalid();
+import com.josemarcellio.joseplugin.job.manager.JobsManager;
+import org.bukkit.scheduler.BukkitRunnable;
+
+public class JobsTask extends BukkitRunnable {
+
+    private final JobsManager jobsManager;
+
+    public JobsTask(JobsManager jobsManager) {
+        this.jobsManager = jobsManager;
+    }
+
+    @Override
+    public void run() {
+        jobsManager.saveAllDirtyPlayers();
+    }
 }

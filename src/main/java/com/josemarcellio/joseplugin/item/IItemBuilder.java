@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-
 public interface IItemBuilder {
     IItemBuilder setName(Component name);
     IItemBuilder addLore(Component... lore);

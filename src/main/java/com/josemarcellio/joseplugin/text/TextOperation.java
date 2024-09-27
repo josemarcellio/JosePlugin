@@ -14,6 +14,7 @@
 
 package com.josemarcellio.joseplugin.text;
 
+@FunctionalInterface
 public interface TextOperation {
     String process(String input);
 }

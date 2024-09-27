@@ -82,7 +82,7 @@ public class JosePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        warpManager.saveWarps();
+        warpManager.closeDatabase();
         jobsManager.closeDatabase();
         pluginManagerRegistry = null;
         dependencyManager.disableDependencies(loadedPlugins, getServer());

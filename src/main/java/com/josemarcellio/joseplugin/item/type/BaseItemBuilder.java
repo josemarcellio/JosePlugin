@@ -30,11 +30,13 @@ import java.util.List;
 public class BaseItemBuilder implements IItemBuilder {
     protected ItemStack itemStack;
     protected ItemMeta itemMeta;
+    protected Material material;
 
     public BaseItemBuilder(Material material) {
         if (material == Material.AIR) {
             throw new JosePluginException("Material cannot be AIR for ItemBuilder.", null);
         }
+        this.material = material;
         this.itemStack = new ItemStack(material);
         this.itemMeta = itemStack.getItemMeta();
         if (this.itemMeta == null) {
@@ -51,6 +53,9 @@ public class BaseItemBuilder implements IItemBuilder {
     @Override
     public IItemBuilder addLore(Component... lore) {
         List<Component> loreList = this.itemMeta.lore() == null ? new ArrayList<>() : this.itemMeta.lore();
+        if (loreList == null) {
+            throw new JosePluginException("Lore components cannot be null", null);
+        }
         loreList.addAll(Arrays.asList(lore));
         this.itemMeta.lore(loreList);
         return this;

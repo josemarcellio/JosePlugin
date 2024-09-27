@@ -107,9 +107,13 @@ public class PartyGUI {
                 ));
             }
 
-            String modeName = party.getMode() == Party.PartyMode.FRIENDLY ? "<green>Friendly Mode" : "<red>Duel Mode";
+            Component modeName = componentBuilder.singleComponentBuilder().addOperationIf(
+                    party.getMode() == Party.PartyMode.FRIENDLY,
+                    "<green>Friendly Mode",
+                    "<red>Duel Mode").build();
+
             guiBuilder.addItem(53, new GUIItem(itemBuilderFactory.createItemBuilder(Material.PAPER)
-                    .setName(componentBuilder.singleComponentBuilder().text(modeName).build())
+                    .setName(modeName)
                     .build(), event -> {
                 Party.PartyMode newMode = party.getMode() == Party.PartyMode.FRIENDLY ? Party.PartyMode.DUEL : Party.PartyMode.FRIENDLY;
                 party.setMode(newMode);
@@ -149,7 +153,7 @@ public class PartyGUI {
 
         int[] glassSlots = {
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35,
-                36, 44, 45, 46, 47, 48, 50, 51, 52, 53
+                36, 44, 45, 46, 47, 48, 50, 51, 52
         };
 
         for (int slot : glassSlots) {

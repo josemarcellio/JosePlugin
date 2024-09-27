@@ -14,6 +14,7 @@
 
 package com.josemarcellio.joseplugin.blacklist;
 
+@FunctionalInterface
 public interface BlacklistChecker<T> {
     boolean isBlacklisted(T t);
 }
