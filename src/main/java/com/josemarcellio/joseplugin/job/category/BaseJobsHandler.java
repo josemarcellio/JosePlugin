@@ -14,48 +14,26 @@
 
 package com.josemarcellio.joseplugin.job.category;
 
-import com.destroystokyo.paper.ParticleBuilder;
-
 import com.josemarcellio.joseplugin.JosePlugin;
+import com.josemarcellio.joseplugin.component.ComponentBuilder;
+import com.josemarcellio.joseplugin.cooldown.CooldownManager;
 import com.josemarcellio.joseplugin.party.manager.Party;
 import com.josemarcellio.joseplugin.party.manager.PartyManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 public abstract class BaseJobsHandler {
 
+    protected final ComponentBuilder componentBuilder = new ComponentBuilder();
+    protected final CooldownManager cooldownManager = new CooldownManager();
+
     protected abstract JosePlugin getPlugin();
     protected abstract PartyManager getPlayerParty();
     protected abstract String getJobName();
-    protected abstract List<Material> getValidTools();
-    protected abstract List<Particle> getParticles();
-
-    public void handleParticleAndDrop(Player player, Location location) {
-        int playerLevel = getPlugin().getJobsManager().getLevel(player.getUniqueId());
-
-        ItemStack item = player.getInventory().getItemInMainHand();
-        if (getValidTools().contains(item.getType())) {
-            Particle particle = getParticleForLevel(playerLevel);
-            sendParticle(location.add(0.5, 1, 0.5), particle);
-        }
-    }
-
-    private Particle getParticleForLevel(int level) {
-        if (level >= 1 && level <= 15) {
-            return getParticles().getFirst();
-        } else if (level >= 16 && level <= 30) {
-            return getParticles().get(1);
-        } else if (level >= 31 && level <= 50) {
-            return getParticles().get(2);
-        } else {
-            return getParticles().get(2);
-        }
-    }
 
     public void handleSharedExp(Player player, double amount) {
         Party party = getPlayerParty().getPlayerParty(player.getUniqueId());
@@ -79,14 +57,29 @@ public abstract class BaseJobsHandler {
 
     }
 
-    public void sendParticle(Location location, Particle particle) {
-        ParticleBuilder particleBuilder = new ParticleBuilder(particle);
-        particleBuilder.offset(0, 0, 0);
-        particleBuilder.count(15);
-        particleBuilder.location(location);
-        particleBuilder.receivers(10);
-        particleBuilder.extra(0);
-        particleBuilder.allPlayers();
-        particleBuilder.spawn();
+    public void sendActionBar(Player player, String message) {
+        Component format = componentBuilder.singleComponentBuilder().text(message).build();
+        player.sendActionBar(format);
+    }
+
+    public void sendJobProgressActionBar(Player player, Object object) {
+        UUID playerUUID = player.getUniqueId();
+
+        int level = getPlugin().getJobsManager().getLevel(player.getUniqueId());
+        double exp = getPlugin().getJobsManager().getExp(player.getUniqueId());
+        double requiredExp = level * 100.0;
+
+        String message = String.format(
+                "<gray>Level: <aqua>%d <gray>(<aqua>%.2f <dark_gray>/<aqua>%.2f<gray>) (<light_purple>%s<gray>)",
+                level, exp, requiredExp, object.toString()
+        );
+
+        String action = "job_progress";
+        int cooldownTime = 1000;
+
+        if (!cooldownManager.isOnCooldown(playerUUID, action)) {
+            cooldownManager.startCooldown(playerUUID, action, cooldownTime);
+            sendActionBar(player, message);
+        }
     }
 }

@@ -226,6 +226,6 @@ public class JobsManager {
     }
 
     public int getMaxLevel() {
-        return 114;
+        return 1000;
     }
 }
