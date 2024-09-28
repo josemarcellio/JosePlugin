@@ -69,7 +69,12 @@ public abstract class BaseSkillsHandler {
                 Instant now = Instant.now();
                 Instant end = now.plusMillis(remainingTime);
 
-                String formattedTime = timeFormatter.formattedTime(end);
+                String formattedTime = timeFormatter
+                        .setDayString("hari")
+                        .setHourString("jam")
+                        .setMinuteString("menit")
+                        .setSecondString("detik")
+                        .formattedTime(end);
 
                 if (!cooldownManager.isOnCooldown(playerUUID, messageAction)) {
                     cooldownManager.startCooldown(playerUUID, messageAction, messageCooldownTime);
