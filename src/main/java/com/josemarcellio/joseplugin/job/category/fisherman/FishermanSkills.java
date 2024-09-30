@@ -12,7 +12,7 @@
  * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
  */
 
-package com.josemarcellio.joseplugin.job.category.lumberjack;
+package com.josemarcellio.joseplugin.job.category.fisherman;
 
 import com.josemarcellio.joseplugin.JosePlugin;
 import com.josemarcellio.joseplugin.job.category.BaseSkillsHandler;
@@ -26,11 +26,11 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Arrays;
 import java.util.List;
 
-public class LumberjackSkills extends BaseSkillsHandler implements Listener {
+public class FishermanSkills extends BaseSkillsHandler implements Listener {
 
     private final JosePlugin plugin;
 
-    public LumberjackSkills(JosePlugin plugin) {
+    public FishermanSkills(JosePlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -41,18 +41,13 @@ public class LumberjackSkills extends BaseSkillsHandler implements Listener {
 
     @Override
     protected String getJobName() {
-        return "lumberjack";
+        return "fisherman";
     }
 
     @Override
     protected List<Material> getValidTools() {
-        return Arrays.asList(
-                Material.WOODEN_AXE,
-                Material.STONE_AXE,
-                Material.IRON_AXE,
-                Material.GOLDEN_AXE,
-                Material.DIAMOND_AXE,
-                Material.NETHERITE_AXE
+        return List.of(
+                Material.FISHING_ROD
         );
     }
 
@@ -60,14 +55,14 @@ public class LumberjackSkills extends BaseSkillsHandler implements Listener {
     @Override
     protected List<PotionEffect> getEffects() {
         return Arrays.asList(
-                new PotionEffect(PotionEffectType.HASTE, 30 * 20, 1),
-                new PotionEffect(PotionEffectType.SPEED, 30 * 20, 1)
+                new PotionEffect(PotionEffectType.WATER_BREATHING, 30 * 20, 1),
+                new PotionEffect(PotionEffectType.LUCK, 30 * 20, 1)
         );
     }
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void onRightClickAxe(PlayerInteractEvent event) {
+    public void onRightClickFishingRod(PlayerInteractEvent event) {
         handleSkillActivation(event);
     }
 }

@@ -21,8 +21,12 @@ import com.josemarcellio.joseplugin.cooldown.CooldownManager;
 import com.josemarcellio.joseplugin.cooldown.ICooldownManager;
 import com.josemarcellio.joseplugin.dailyreward.command.DailyRewardCommand;
 import com.josemarcellio.joseplugin.inventory.GUIManager;
+import com.josemarcellio.joseplugin.job.category.breeder.BreederListener;
+import com.josemarcellio.joseplugin.job.category.breeder.BreederSkills;
 import com.josemarcellio.joseplugin.job.category.farmer.FarmerListener;
 import com.josemarcellio.joseplugin.job.category.farmer.FarmerSkills;
+import com.josemarcellio.joseplugin.job.category.fisherman.FishermanListener;
+import com.josemarcellio.joseplugin.job.category.fisherman.FishermanSkills;
 import com.josemarcellio.joseplugin.job.category.hunter.HunterListener;
 import com.josemarcellio.joseplugin.job.category.hunter.HunterSkills;
 import com.josemarcellio.joseplugin.job.category.lumberjack.LumberjackListener;
@@ -30,16 +34,17 @@ import com.josemarcellio.joseplugin.job.category.lumberjack.LumberjackSkills;
 import com.josemarcellio.joseplugin.job.category.miner.MinerListener;
 import com.josemarcellio.joseplugin.job.category.miner.MinerSkills;
 import com.josemarcellio.joseplugin.job.command.JobsCommand;
+import com.josemarcellio.joseplugin.job.compatibility.JobsPlaceholderAPI;
 import com.josemarcellio.joseplugin.party.PartyListener;
 import com.josemarcellio.joseplugin.party.command.PartyCommand;
 import com.josemarcellio.joseplugin.party.manager.PartyManager;
 import com.josemarcellio.joseplugin.playerwarp.command.WarpCommand;
 
 import com.josemarcellio.joseplugin.playtime.command.PlaytimeCommand;
-
 import com.josemarcellio.joseplugin.silent.command.SilentKickCommand;
 import com.josemarcellio.joseplugin.silent.manager.SilentManager;
 import com.josemarcellio.joseplugin.silent.SilentListener;
+import org.bstats.bukkit.Metrics;
 
 public class PluginManagerRegistry implements PluginManager {
 
@@ -66,10 +71,15 @@ public class PluginManagerRegistry implements PluginManager {
         listenerManager.registerListener(new HunterListener(plugin, partyManager));
         listenerManager.registerListener(new MinerListener(plugin, partyManager));
         listenerManager.registerListener(new LumberjackListener(plugin, partyManager));
+        listenerManager.registerListener(new FishermanListener(plugin, partyManager));
+        listenerManager.registerListener(new BreederListener(plugin, partyManager));
+
         listenerManager.registerListener(new FarmerSkills(plugin));
         listenerManager.registerListener(new HunterSkills(plugin));
         listenerManager.registerListener(new MinerSkills(plugin));
         listenerManager.registerListener(new LumberjackSkills(plugin));
+        listenerManager.registerListener(new FishermanSkills(plugin));
+        listenerManager.registerListener(new BreederSkills(plugin));
 
         listenerManager.registerListener(new SilentListener(plugin, silentManager));
     }
@@ -83,5 +93,14 @@ public class PluginManagerRegistry implements PluginManager {
         commandManager.registerCommand("troll", new TrollCommand(cooldownManager));
         commandManager.registerCommand("playtime", new PlaytimeCommand());
         commandManager.registerCommand("silentkick", new SilentKickCommand(silentManager));
+    }
+
+    @Override
+    public void registerOthers() {
+        JobsPlaceholderAPI jobsPlaceholderAPI = new JobsPlaceholderAPI(plugin);
+        jobsPlaceholderAPI.register();
+
+        int id = 23444;
+        new Metrics(plugin, id);
     }
 }

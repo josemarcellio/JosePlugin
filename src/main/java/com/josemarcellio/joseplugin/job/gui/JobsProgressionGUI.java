@@ -88,6 +88,19 @@ public class JobsProgressionGUI {
                 addProgressionItem(builder, entry.getValue(), expValue, PROGRESSION_SLOTS[slotIndex]);
                 slotIndex++;
             }
+        } else if ("fisherman".equalsIgnoreCase(job)) {
+            for (Map.Entry<Material, Double> entry : progressionData.getFishermanFishExpMap().entrySet()) {
+                if (slotIndex >= PROGRESSION_SLOTS.length) break;
+                addProgressionItem(builder, entry.getKey(), entry.getValue(), PROGRESSION_SLOTS[slotIndex]);
+                slotIndex++;
+            }
+        } else if ("breeder".equalsIgnoreCase(job)) {
+            for (Map.Entry<EntityType, Material> entry : progressionData.getBreederMobSpawnEggMap().entrySet()) {
+                if (slotIndex >= PROGRESSION_SLOTS.length) break;
+                double expValue = progressionData.getBreederMobExpMap().get(entry.getKey());
+                addProgressionItem(builder, entry.getValue(), expValue, PROGRESSION_SLOTS[slotIndex]);
+                slotIndex++;
+            }
         }
     }
 

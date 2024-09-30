@@ -35,8 +35,8 @@ public class DependencyManager implements IDependencyManager {
         try {
             List<File> downloadedFiles = pluginDownloader.downloadPlugins(plugin);
             pluginDownloader.loadPlugins(plugin, new ArrayList<>(), downloadedFiles);
-        } catch (JosePluginException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new JosePluginException("Failed to download and load dependencies!", e);
         }
     }
 

@@ -12,7 +12,7 @@
  * For more details, refer to the full license at <https://www.gnu.org/licenses/>.
  */
 
-package com.josemarcellio.joseplugin.job.category.lumberjack;
+package com.josemarcellio.joseplugin.job.category.breeder;
 
 import com.josemarcellio.joseplugin.JosePlugin;
 import com.josemarcellio.joseplugin.job.category.BaseSkillsHandler;
@@ -26,11 +26,11 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Arrays;
 import java.util.List;
 
-public class LumberjackSkills extends BaseSkillsHandler implements Listener {
+public class BreederSkills extends BaseSkillsHandler implements Listener {
 
     private final JosePlugin plugin;
 
-    public LumberjackSkills(JosePlugin plugin) {
+    public BreederSkills(JosePlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -41,18 +41,18 @@ public class LumberjackSkills extends BaseSkillsHandler implements Listener {
 
     @Override
     protected String getJobName() {
-        return "lumberjack";
+        return "breeder";
     }
 
     @Override
     protected List<Material> getValidTools() {
         return Arrays.asList(
-                Material.WOODEN_AXE,
-                Material.STONE_AXE,
-                Material.IRON_AXE,
-                Material.GOLDEN_AXE,
-                Material.DIAMOND_AXE,
-                Material.NETHERITE_AXE
+                Material.WHEAT,
+                Material.CARROTS,
+                Material.POTATOES,
+                Material.BEETROOT,
+                Material.BEEF,
+                Material.BONE
         );
     }
 
@@ -60,14 +60,14 @@ public class LumberjackSkills extends BaseSkillsHandler implements Listener {
     @Override
     protected List<PotionEffect> getEffects() {
         return Arrays.asList(
-                new PotionEffect(PotionEffectType.HASTE, 30 * 20, 1),
+                new PotionEffect(PotionEffectType.REGENERATION, 30 * 20, 1),
                 new PotionEffect(PotionEffectType.SPEED, 30 * 20, 1)
         );
     }
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void onRightClickAxe(PlayerInteractEvent event) {
+    public void onRightClickFood(PlayerInteractEvent event) {
         handleSkillActivation(event);
     }
 }

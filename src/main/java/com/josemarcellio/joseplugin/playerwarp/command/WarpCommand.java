@@ -22,7 +22,7 @@ import com.josemarcellio.joseplugin.location.module.GroundChecker;
 import com.josemarcellio.joseplugin.location.module.HazardChecker;
 import com.josemarcellio.joseplugin.location.module.ObstructionChecker;
 import com.josemarcellio.joseplugin.location.module.VoidChecker;
-import com.josemarcellio.joseplugin.location.module.hook.RedProtectChecker;
+import com.josemarcellio.joseplugin.location.module.compatibility.RedProtectChecker;
 import com.josemarcellio.joseplugin.playerwarp.gui.WarpListGUI;
 import com.josemarcellio.joseplugin.playerwarp.manager.Warp;
 import com.josemarcellio.joseplugin.playerwarp.manager.WarpManager;
@@ -150,7 +150,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         double price = 500;
-        Economy econ = plugin.getEconomy();
+        Economy econ = plugin.getEconomyManager().getEconomy();
 
         if (econ != null && !econ.has(player, price)) {
             player.sendMessage(componentBuilder.singleComponentBuilder().text("<green> 🛸 <color:#fae7b5>PlayerWarp <color:#c4c3d0>• <white>Kamu tidak memiliki cukup coins untuk membuat warp, biaya pembuatan: " + price + " coins!").build());

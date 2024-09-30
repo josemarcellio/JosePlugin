@@ -34,6 +34,7 @@ public class JobsManager {
     private final Map<String, String> jobTextures = new HashMap<>();
     private final Map<String, String> jobDisplayNames = new HashMap<>();
     private final Map<String, Integer> jobWorkerCount = new HashMap<>();
+    private final Map<String, String> jobDescription = new HashMap<>();
     private final int maxWorkersPerJob = 30;
     private final JobsLevelRewards rewardsManager;
     private final Set<UUID> dirtyPlayers = new HashSet<>();
@@ -52,11 +53,22 @@ public class JobsManager {
         jobTextures.put("hunter", "d1d0e900e5484d8d562a8566588c8b6390065b68a279c7c7bf275ebdd2ee9b03");
         jobTextures.put("farmer", "5205c1a85929832b118b62a352efa09db4fc035aa44aac660059c0fde579fde");
         jobTextures.put("lumberjack", "63c143640079253eff861872b6c5580c755eda6bdc3ff74a9846d0ce790c7b2e");
+        jobTextures.put("fisherman", "d804e42ec9b07fce1ce0058b78df5763f6e410d9ce82ef1ebb9597a152b6d4c8");
+        jobTextures.put("breeder", "19712bc1d2ca42eb512f833cd56139df10284afa29d4489ddd62753dcd7adb30");
 
         jobDisplayNames.put("miner", "<aqua>Miner");
         jobDisplayNames.put("hunter", "<blue>Hunter");
         jobDisplayNames.put("farmer", "<yellow>Farmer");
         jobDisplayNames.put("lumberjack", "<red>Lumberjack");
+        jobDisplayNames.put("fisherman", "<light_purple>Fisherman");
+        jobDisplayNames.put("breeder", "<green>Breeder");
+
+        jobDescription.put("miner", "<aqua>Hancurkan block sesuai dengan required task");
+        jobDescription.put("hunter", "<aqua>Bunuh mob sesuai dengan required task");
+        jobDescription.put("farmer", "<aqua>Panen hasil pertanian sesuai dengan required task");
+        jobDescription.put("lumberjack", "<aqua>Tebang pohon sesuai dengan required task");
+        jobDescription.put("fisherman", "<aqua>Mancing ikan sesuai dengan required task");
+        jobDescription.put("breeder", "<aqua>Kawinkan ternak sesuai dengan required task");
     }
 
     public int getMaxWorkersPerJob() {
@@ -69,6 +81,10 @@ public class JobsManager {
 
     public String getDisplayName(String job) {
         return jobDisplayNames.getOrDefault(job, "None");
+    }
+
+    public String getJobDescription(String job) {
+        return jobDescription.getOrDefault(job, "None");
     }
 
     private void startAutoSaveTask() {

@@ -48,7 +48,7 @@ public abstract class BaseSkillsHandler {
         String job = getPlugin().getJobsManager().getJob(playerUUID);
 
         if (!getJobName().equalsIgnoreCase(job)) return;
-        if (getPlugin().getJobsManager().getLevel(playerUUID) < 25) return;
+        if (getPlugin().getJobsManager().getLevel(playerUUID) < 1) return;
 
         ItemStack item = player.getInventory().getItemInMainHand();
         if (!isValidTool(item.getType())) return;

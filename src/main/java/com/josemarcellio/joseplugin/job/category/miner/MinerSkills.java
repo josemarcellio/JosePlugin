@@ -66,7 +66,7 @@ public class MinerSkills extends BaseSkillsHandler implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void onAxeRightClick(PlayerInteractEvent event) {
+    public void onRightClickPickaxe(PlayerInteractEvent event) {
         handleSkillActivation(event);
     }
 }

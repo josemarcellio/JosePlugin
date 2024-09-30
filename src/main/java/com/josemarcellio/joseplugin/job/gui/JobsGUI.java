@@ -51,6 +51,8 @@ public class JobsGUI {
         addJobItem(builder, player, "hunter");
         addJobItem(builder, player, "farmer");
         addJobItem(builder, player, "lumberjack");
+        addJobItem(builder, player, "fisherman");
+        addJobItem(builder, player, "breeder");
 
         addItem(builder);
         addGlassPane(builder);
@@ -64,6 +66,8 @@ public class JobsGUI {
         String displayName = jobsManager.getDisplayName(job);
 
         List<Component> lore = Arrays.asList(
+                componentBuilder.singleComponentBuilder().text("").build(),
+                componentBuilder.singleComponentBuilder().text(jobsManager.getJobDescription(job)).build(),
                 componentBuilder.singleComponentBuilder().text("").build(),
                 componentBuilder.singleComponentBuilder().text("<gray>Total Worker: <aqua>" + jobsManager.getTotalWorkers(job) + "<dark_gray>/<aqua>" + jobsManager.getMaxWorkersPerJob()).build(),
                 componentBuilder.singleComponentBuilder().text("").build(),
@@ -141,6 +145,8 @@ public class JobsGUI {
             case "hunter" -> 21;
             case "farmer" -> 22;
             case "lumberjack" -> 23;
+            case "fisherman" -> 24;
+            case "breeder" -> 29;
             default -> 0;
         };
     }

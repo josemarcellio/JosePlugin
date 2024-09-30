@@ -23,6 +23,7 @@ import java.util.Map;
 public class JobsProgressionData {
 
     private final Map<Material, Double> minerBlockExpMap = new HashMap<>();
+
     private final Map<EntityType, Material> hunterMobSpawnEggMap = new HashMap<>();
     private final Map<EntityType, Double> hunterMobExpMap = new HashMap<>();
 
@@ -31,11 +32,18 @@ public class JobsProgressionData {
 
     private final Map<Material, Double> lumberjackBlockExpMap = new HashMap<>();
 
+    private final Map<Material, Double> fishermanFishExpMap = new HashMap<>();
+
+    private final Map<EntityType, Material> breederMobSpawnEggMap = new HashMap<>();
+    private final Map<EntityType, Double> breederMobExpMap = new HashMap<>();
+
     public JobsProgressionData() {
         setupMinerData();
         setupHunterData();
         setupFarmerBlockExpMap();
         setupLumberjackBlockExpMap();
+        setupFishermanFishExpMap();
+        setupBreederBlockExpMap();
     }
 
     private void setupMinerData() {
@@ -101,6 +109,28 @@ public class JobsProgressionData {
 
     }
 
+    private void setupFishermanFishExpMap() {
+        fishermanFishExpMap.put(Material.COD, 2.5);
+        fishermanFishExpMap.put(Material.SALMON, 3.0);
+        fishermanFishExpMap.put(Material.PUFFERFISH, 3.5);
+        fishermanFishExpMap.put(Material.TROPICAL_FISH, 4.0);
+    }
+
+    private void setupBreederBlockExpMap() {
+        breederMobSpawnEggMap.put(EntityType.COW, Material.COW_SPAWN_EGG);
+        breederMobSpawnEggMap.put(EntityType.CHICKEN, Material.CHICKEN_SPAWN_EGG);
+        breederMobSpawnEggMap.put(EntityType.SHEEP, Material.SHEEP_SPAWN_EGG);
+        breederMobSpawnEggMap.put(EntityType.PIG, Material.PIG_SPAWN_EGG);
+        breederMobSpawnEggMap.put(EntityType.WOLF, Material.WOLF_SPAWN_EGG);
+
+        breederMobExpMap.put(EntityType.COW, 2.5);
+        breederMobExpMap.put(EntityType.CHICKEN, 2.5);
+        breederMobExpMap.put(EntityType.SHEEP, 2.5);
+        breederMobExpMap.put(EntityType.PIG, 2.5);
+        breederMobExpMap.put(EntityType.WOLF, 2.5);
+    }
+
+
     public Map<Material, Double> getMinerBlockExpMap() {
         return minerBlockExpMap;
     }
@@ -123,5 +153,17 @@ public class JobsProgressionData {
 
     public Map<Material, Double> getLumberjackBlockExpMap() {
         return lumberjackBlockExpMap;
+    }
+
+    public Map<Material, Double> getFishermanFishExpMap() {
+        return fishermanFishExpMap;
+    }
+
+    public Map<EntityType, Double> getBreederMobExpMap() {
+        return breederMobExpMap;
+    }
+
+    public Map<EntityType, Material> getBreederMobSpawnEggMap() {
+        return breederMobSpawnEggMap;
     }
 }

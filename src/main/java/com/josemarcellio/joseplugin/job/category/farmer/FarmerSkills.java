@@ -67,7 +67,7 @@ public class FarmerSkills extends BaseSkillsHandler implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void onAxeRightClick(PlayerInteractEvent event) {
+    public void onRightClickHoe(PlayerInteractEvent event) {
         handleSkillActivation(event);
     }
 }
