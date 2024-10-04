@@ -24,15 +24,11 @@ import com.josemarcellio.joseplugin.skull.type.SkullType;
 import com.josemarcellio.joseplugin.component.ComponentBuilder;
 import com.josemarcellio.joseplugin.time.TimeFormatter;
 
-import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -69,8 +65,9 @@ public class DailyRewardGUI {
         GUIBuilder builder = new GUIBuilder(componentBuilder.singleComponentBuilder().text("<aqua>Daily Reward</aqua>").build(), 6 * 9);
 
         addDailyReward(builder, player, texture, name, lore);
-        addItem(builder);
-        addGlassPane(builder);
+
+        builder.addGlassPane();
+        builder.addCloseItem();
 
         GUIPage guiPage = builder.build();
         GUIManager.openGUI(player, guiPage);
@@ -89,30 +86,6 @@ public class DailyRewardGUI {
                     }
                 });
         builder.addItem(22, guiReward);
-    }
-
-    private void addGlassPane(GUIBuilder builder) {
-        ItemStack glassItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-        ItemMeta meta = glassItem.getItemMeta();
-        meta.displayName(Component.text(" "));
-        glassItem.setItemMeta(meta);
-
-        int[] glassSlots = {
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35,
-                36, 44, 45, 46, 47, 48, 50, 51, 52, 53
-        };
-
-        for (int slot : glassSlots) {
-            builder.addItem(slot, new GUIItem(glassItem, null));
-        }
-    }
-
-    private void addItem(GUIBuilder builder) {
-
-        GUIItem guiClose = new GUIItem(itemBuilderFactory.createSkullItemBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==", SkullType.BASE64)
-                .setName(componentBuilder.singleComponentBuilder().text("<red>Close</red>").build()).build(), event ->
-                event.getWhoClicked().closeInventory());
-        builder.addItem(49, guiClose);
     }
 
     private boolean hasClaimed(Player player) {

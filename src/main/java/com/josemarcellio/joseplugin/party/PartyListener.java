@@ -38,10 +38,9 @@ public class PartyListener implements Listener {
             Party partyDamaged = partyManager.getPlayerParty(damaged.getUniqueId());
             Party partyDamager = partyManager.getPlayerParty(damager.getUniqueId());
 
-            if (partyDamaged != null && partyDamaged.equals(partyDamager)) {
-                if (partyDamaged.getMode() == Party.PartyMode.FRIENDLY) {
-                    event.setCancelled(true);
-                }
+            if (partyDamaged != null && partyDamaged.equals(partyDamager) &&
+                    partyDamaged.getMode() == Party.PartyMode.FRIENDLY) {
+                event.setCancelled(true);
             }
         }
     }

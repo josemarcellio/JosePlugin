@@ -64,8 +64,8 @@ public class WarpListGUI {
 
         createNavigationPane(guiBuilder, page);
 
-        addItem(guiBuilder);
-        addGlassPane(guiBuilder);
+        guiBuilder.addGlassPane();
+        guiBuilder.addCloseItem();
 
         GUIPage pageGUI = guiBuilder.build();
         GUIManager.openGUI(player, pageGUI);
@@ -181,29 +181,6 @@ public class WarpListGUI {
         closeItem.setItemMeta(closeMeta);
     }
 
-    private void addGlassPane(GUIBuilder builder) {
-        ItemStack glassItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-        ItemMeta meta = glassItem.getItemMeta();
-        meta.displayName(Component.text(" "));
-        glassItem.setItemMeta(meta);
-
-        int[] glassSlots = {
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35,
-                36, 44, 45, 46, 47, 48, 50, 51, 52, 53
-        };
-
-        for (int slot : glassSlots) {
-            builder.addItem(slot, new GUIItem(glassItem, null));
-        }
-    }
-
-    private void addItem(GUIBuilder builder) {
-
-        GUIItem guiClose = new GUIItem(itemBuilderFactory.createSkullItemBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==", SkullType.BASE64)
-                .setName(componentBuilder.singleComponentBuilder().text("<red>Close</red>").build()).build(), event ->
-                event.getWhoClicked().closeInventory());
-        builder.addItem(49, guiClose);
-    }
     private int getWarpCount() {
         WarpManager warpManager = plugin.getWarpManager();
         Map<String, Warp> warpMap = warpManager.getWarps();

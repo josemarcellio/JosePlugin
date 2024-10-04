@@ -21,14 +21,10 @@ import com.josemarcellio.joseplugin.inventory.GUIItem;
 import com.josemarcellio.joseplugin.inventory.page.GUIPage;
 import com.josemarcellio.joseplugin.item.ItemBuilderFactory;
 import com.josemarcellio.joseplugin.job.data.JobsProgressionData;
-import com.josemarcellio.joseplugin.skull.type.SkullType;
 import com.josemarcellio.joseplugin.component.ComponentBuilder;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 
@@ -52,8 +48,8 @@ public class JobsProgressionGUI {
 
         addProgressionItems(builder, jobs);
 
-        addGlassPane(builder);
-        addItem(builder);
+        builder.addGlassPane();
+        builder.addCloseItem();
 
         GUIPage page = builder.build();
         GUIManager.openGUI(player, page);
@@ -63,75 +59,41 @@ public class JobsProgressionGUI {
         JobsProgressionData progressionData = plugin.getJobProgressionData();
         int slotIndex = 0;
 
-        if ("miner".equalsIgnoreCase(job)) {
-            for (Map.Entry<Material, Double> entry : progressionData.getMinerBlockExpMap().entrySet()) {
-                if (slotIndex >= PROGRESSION_SLOTS.length) break;
-                addProgressionItem(builder, entry.getKey(), entry.getValue(), PROGRESSION_SLOTS[slotIndex]);
-                slotIndex++;
+        Map<?, ?> expMap = switch (job.toLowerCase()) {
+            case "miner" -> progressionData.getMinerBlockExpMap();
+            case "farmer" -> progressionData.getFarmerMaterialExpMap();
+            case "lumberjack" -> progressionData.getLumberjackBlockExpMap();
+            case "hunter" -> progressionData.getHunterMobSpawnEggMap();
+            case "fisherman" -> progressionData.getFishermanFishExpMap();
+            case "breeder" -> progressionData.getBreederMobSpawnEggMap();
+            default -> throw new IllegalArgumentException("Unknown job: " + job);
+        };
+
+        for (Map.Entry<?, ?> entry : expMap.entrySet()) {
+            if (slotIndex >= PROGRESSION_SLOTS.length) break;
+
+            Material material;
+            double expValue;
+
+            if (job.equalsIgnoreCase("hunter") || job.equalsIgnoreCase("breeder")) {
+                EntityType entityType = (EntityType) entry.getKey();
+                material = (Material) entry.getValue();
+                expValue = progressionData.getHunterMobExpMap().getOrDefault(entityType, 0.0);
+            } else {
+                material = (Material) entry.getKey();
+                expValue = (Double) entry.getValue();
             }
-        } else if ("farmer".equalsIgnoreCase(job)) {
-            for (Map.Entry<Material, Double> entry : progressionData.getFarmerMaterialExpMap().entrySet()) {
-                if (slotIndex >= PROGRESSION_SLOTS.length) break;
-                addProgressionItem(builder, entry.getKey(), entry.getValue(), PROGRESSION_SLOTS[slotIndex]);
-                slotIndex++;
-            }
-        } else if ("lumberjack".equalsIgnoreCase(job)) {
-            for (Map.Entry<Material, Double> entry : progressionData.getLumberjackBlockExpMap().entrySet()) {
-                if (slotIndex >= PROGRESSION_SLOTS.length) break;
-                addProgressionItem(builder, entry.getKey(), entry.getValue(), PROGRESSION_SLOTS[slotIndex]);
-                slotIndex++;
-            }
-        } else if ("hunter".equalsIgnoreCase(job)) {
-            for (Map.Entry<EntityType, Material> entry : progressionData.getHunterMobSpawnEggMap().entrySet()) {
-                if (slotIndex >= PROGRESSION_SLOTS.length) break;
-                double expValue = progressionData.getHunterMobExpMap().get(entry.getKey());
-                addProgressionItem(builder, entry.getValue(), expValue, PROGRESSION_SLOTS[slotIndex]);
-                slotIndex++;
-            }
-        } else if ("fisherman".equalsIgnoreCase(job)) {
-            for (Map.Entry<Material, Double> entry : progressionData.getFishermanFishExpMap().entrySet()) {
-                if (slotIndex >= PROGRESSION_SLOTS.length) break;
-                addProgressionItem(builder, entry.getKey(), entry.getValue(), PROGRESSION_SLOTS[slotIndex]);
-                slotIndex++;
-            }
-        } else if ("breeder".equalsIgnoreCase(job)) {
-            for (Map.Entry<EntityType, Material> entry : progressionData.getBreederMobSpawnEggMap().entrySet()) {
-                if (slotIndex >= PROGRESSION_SLOTS.length) break;
-                double expValue = progressionData.getBreederMobExpMap().get(entry.getKey());
-                addProgressionItem(builder, entry.getValue(), expValue, PROGRESSION_SLOTS[slotIndex]);
-                slotIndex++;
-            }
+
+            addProgressionItem(builder, material, expValue, PROGRESSION_SLOTS[slotIndex]);
+            slotIndex++;
         }
     }
+
 
     private void addProgressionItem(GUIBuilder builder, Material material, double expValue, int slot) {
 
         builder.addItem(slot, new GUIItem(itemBuilderFactory.createItemBuilder(material)
                 .setName(componentBuilder.singleComponentBuilder().text(material.name()).build())
                 .addLore(componentBuilder.singleComponentBuilder().text("<gray>Exp: <aqua>" + expValue).build()).build(), event -> event.setCancelled(true)));
-    }
-
-    private void addGlassPane(GUIBuilder builder) {
-        ItemStack glassItem = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-        ItemMeta meta = glassItem.getItemMeta();
-        meta.displayName(Component.text(" "));
-        glassItem.setItemMeta(meta);
-
-        int[] glassSlots = {
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35,
-                36, 44, 45, 46, 47, 48, 50, 51, 52, 53
-        };
-
-        for (int slot : glassSlots) {
-            builder.addItem(slot, new GUIItem(glassItem, null));
-        }
-    }
-
-    private void addItem(GUIBuilder builder) {
-
-        GUIItem guiClose = new GUIItem(itemBuilderFactory.createSkullItemBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==", SkullType.BASE64)
-                .setName(componentBuilder.singleComponentBuilder().text("<red>Close</red>").build()).build(), event ->
-                event.getWhoClicked().closeInventory());
-        builder.addItem(49, guiClose);
     }
 }

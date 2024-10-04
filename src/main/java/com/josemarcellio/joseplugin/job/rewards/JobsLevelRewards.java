@@ -36,7 +36,7 @@ public class JobsLevelRewards {
         }
 
         double econReward = plugin.getJobsManager().getEconReward(level);
-        
+
         econ.depositPlayer(player, econReward);
 
         player.sendMessage(componentBuilder.singleComponentBuilder().text("<green>-------------------------").build());
